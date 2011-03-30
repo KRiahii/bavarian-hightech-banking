@@ -1,6 +1,7 @@
 package bavaria.hightech.testit;
 
 import bavaria.hightech.banking.*;
+import bavaria.hightech.banking.Konto.MoneyException;
 
 /**
  * 
@@ -10,14 +11,13 @@ import bavaria.hightech.banking.*;
 
 public class Test {
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws MoneyException {
 
 		Konto konto1 = new FestgeldKonto(2.34f, 202973324, "Herr Bauer");
 		
 		System.out.println("-------------------------");
 		
 		konto1.printTyp();
-		
 		konto1.manageMoney("Gutschrift", 240.77, '+');
 		konto1.manageMoney("Rechnung", 120, '-');
 		konto1.manageMoney("Gehalt", 3200.00, '+');
@@ -25,25 +25,22 @@ public class Test {
 		konto1.verzinsen();
 		konto1.verzinsen();
 		konto1.verzinsen();
-
 		konto1.manageMoney("test", 4000, '-');
-		
+
 		System.out.println(konto1.toString());
 		
 		
 		
 		System.out.println("-------------------------");
 		
-		Konto konto2 = new GiroKonto(5.49f, 202973998, "Frau MÃ¼ller");
+		Konto konto2 = new GiroKonto(5.49f, 202973998, "Frau Müller");
 		
 		konto2.printTyp();
-		
 		konto2.manageMoney("Gehalt", 2800, '+');
 		konto2.manageMoney("Miete", 780, '-');
 		konto2.manageMoney("Urlaub", 3800, '-');
 		konto2.verzinsen();
 		konto2.manageMoney("Gehalt", 2800, '+');
-
 		System.out.println();
 		System.out.println(konto2.toString());
 
@@ -73,5 +70,4 @@ public class Test {
 
 		bank.list();
 	}
-
 }

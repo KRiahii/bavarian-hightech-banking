@@ -4,9 +4,9 @@ import java.text.NumberFormat;
 
 /**
  * 
- * Basisklasse Konto mit Attributen fÃ¼r 
+ * Basisklasse Konto mit Attributen für 
  * Kontonummer, Kontostand und Kontoinhaber
- * und einer Methode fÃ¼r Zugang bzw. 
+ * und einer Methode für Zugang bzw. 
  * Abgang eines spezifizierten Betrages sowie 
  * zum Abfragen der Kontonummer, 
  * des Kontoinhabers und des Kontostandes.
@@ -14,6 +14,16 @@ import java.text.NumberFormat;
  */
 
 public abstract class Konto {
+	
+	public class MoneyException extends Exception {
+		public MoneyException() { 
+			super(); 
+		}
+		
+	    public MoneyException(String s) { 
+	    	super(s); 
+	    }
+	}
 
 	private int kNummer;
 	private double kStand;
@@ -39,23 +49,19 @@ public abstract class Konto {
 	 */
 	public double getKStand(){ return this.kStand; }
 	
-	/**set_kStand()
+	/**manageMoney()
 	 * @param
 	 */
-	public void manageMoney(String reason, double amount, char sign){
+	public void manageMoney(String reason, double amount, char sign) throws MoneyException{
 	
 		if( amount < 0 ){
 			
-			System.out.println("UngÃ¼ltiger Betrag");
-			return;
+			throw new MoneyException("Ungültiger Betrag" + amount);
 		}
 		
 		if( sign != '+' && sign != '-' ){
 			
-			System.out.println();
-			System.out.println(">> UngÃ¼ltiges Vorzeichen");
-			System.out.println();
-			return;
+			throw new MoneyException(">> Ungültiges Vorzeichen" + sign);
 		}
 		
 		verbuchen(reason, amount, sign);
@@ -69,10 +75,10 @@ public abstract class Konto {
 	/**verbuchen()
 	 * @param
 	 */
-	protected void verbuchen(String reason, double amount, char sign){
+	protected void verbuchen(String reason, double amount, char sign) throws MoneyException {
 		
 		if( amount < 0 )
-			return;
+			throw new MoneyException("Ungültiger wert " + amount);
 		
 		if( sign == '+' )
 			this.kStand += amount;
@@ -102,5 +108,5 @@ public abstract class Konto {
 	}
 	
 	abstract public void printTyp();
-	abstract public void verzinsen();
+	abstract public void verzinsen() throws MoneyException;
 }

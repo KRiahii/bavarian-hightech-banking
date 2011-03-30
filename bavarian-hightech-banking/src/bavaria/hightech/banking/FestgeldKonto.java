@@ -1,15 +1,17 @@
 package bavaria.hightech.banking;
 
+import bavaria.hightech.banking.Konto.MoneyException;
+
 /**
  * 
  * FestgeldKonto mit einem HabeZins Attribut
  * und entsprechender Verzinsungsmethode
- * !!!!kein negativer Kontostand mÃ¶glich!!!!
+ * !!!!kein negativer Kontostand möglich!!!!
  *
  */
 
 public class FestgeldKonto extends Konto {
-	
+
 	private float zins;
 
 	/**
@@ -25,7 +27,7 @@ public class FestgeldKonto extends Konto {
 	}
 	
 	@Override
-	public void verzinsen(){
+	public void verzinsen() throws MoneyException {
 		
 		double amount = (this.getKStand()/100)*this.zins;
 		this.manageMoney("Zins", amount, '+');
@@ -39,15 +41,12 @@ public class FestgeldKonto extends Konto {
 	 */
 	
 	@Override
-	public void manageMoney(String reason, double amount, char sign){
+	public void manageMoney(String reason, double amount, char sign) throws MoneyException {
 		
 		if( sign == '-' )
 			if( this.getKStand() - amount < 0 ){
 				
-				System.out.println();
-				System.out.println(">> Nicht genug Geld vorhanden!");
-				System.out.println();
-				return;
+				throw new MoneyException("Nicht genug Geld vorhanden " + getKStand() + " " + amount);
 			}
 		
 		super.verbuchen(reason, amount, sign);
