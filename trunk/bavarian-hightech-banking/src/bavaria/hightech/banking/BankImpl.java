@@ -1,5 +1,7 @@
 package bavaria.hightech.banking;
 
+import bavaria.hightech.banking.Konto.MoneyException;
+
 public class BankImpl implements BankKundenSicht{
 	
 	private Konto[] konten;
@@ -22,7 +24,7 @@ public class BankImpl implements BankKundenSicht{
 		
 		else{
 			
-			System.out.println(">> UngÃ¼ltiger Typ!");
+			System.out.println(">> Ungültiger Typ!");
 			return;
 		}
 			
@@ -31,21 +33,37 @@ public class BankImpl implements BankKundenSicht{
 	@Override
 	public void addMoney(double amount, int kNummer) {
 		
-		konten[calculateIndex(kNummer)].manageMoney("Eingezahlt", amount, '+');
+		try {
+			konten[calculateIndex(kNummer)].manageMoney("Eingezahlt", amount, '+');
+		} catch (MoneyException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void requestMoney(double amount, int kNummer) {
 		
-		konten[calculateIndex(kNummer)].manageMoney("Abgehoben", amount, '-');
+		try {
+			konten[calculateIndex(kNummer)].manageMoney("Abgehoben", amount, '-');
+		} catch (MoneyException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void transferMoney(double amount, int kNummerFROM, int kNummerTO) {
 		
-		konten[calculateIndex(kNummerFROM)].manageMoney("Ãœberweisung", amount, '-');
+		try {
+			konten[calculateIndex(kNummerFROM)].manageMoney("Überweisung", amount, '-');
+		} catch (MoneyException e) {
+			e.printStackTrace();
+		}
 		
-		konten[calculateIndex(kNummerTO)].manageMoney("Einzahlung", amount, '+');
+		try {
+			konten[calculateIndex(kNummerTO)].manageMoney("Einzahlung", amount, '+');
+		} catch (MoneyException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -54,7 +72,7 @@ public class BankImpl implements BankKundenSicht{
 		System.out.println(">> " + konten[calculateIndex(kNummer)].getKStand() + " Konto: " + konten[calculateIndex(kNummer)].getKnummer());
 	}
 
-	public void verzinsen(){
+	public void verzinsen() throws MoneyException {
 		
 		for(int i = 0; i < konten.length; i++)
 			if(konten[i] != null)
