@@ -17,10 +17,10 @@ public class BankImpl implements BankKundenSicht{
 	public void createAcc(String typ, float zins, String kInhaber) {
 		
 		if( typ.equals("GiroKonto") )
-			konten[calculateIndex(2000+count)] = new GiroKonto(zins, 2000+count++, kInhaber);
+			calculateIndex(2000+count, new GiroKonto(zins, 2000+count++, kInhaber));
 
 		else if( typ.equals("FestgeldKonto") )
-			konten[calculateIndex(2000+count)] = new FestgeldKonto(zins, 2000+count++, kInhaber);
+			calculateIndex(2000+count, new FestgeldKonto(zins, 2000+count++, kInhaber));
 		
 		else{
 			
@@ -34,7 +34,7 @@ public class BankImpl implements BankKundenSicht{
 	public void addMoney(double amount, int kNummer) {
 		
 		try {
-			konten[calculateIndex(kNummer)].manageMoney("Eingezahlt", amount, '+');
+			calculateIndex(kNummer).manageMoney("Eingezahlt", amount, '+');
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
@@ -44,7 +44,7 @@ public class BankImpl implements BankKundenSicht{
 	public void requestMoney(double amount, int kNummer) {
 		
 		try {
-			konten[calculateIndex(kNummer)].manageMoney("Abgehoben", amount, '-');
+			calculateIndex(kNummer).manageMoney("Abgehoben", amount, '-');
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
@@ -54,13 +54,13 @@ public class BankImpl implements BankKundenSicht{
 	public void transferMoney(double amount, int kNummerFROM, int kNummerTO) {
 		
 		try {
-			konten[calculateIndex(kNummerFROM)].manageMoney("Überweisung", amount, '-');
+			calculateIndex(kNummerFROM).manageMoney("Überweisung", amount, '-');
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			konten[calculateIndex(kNummerTO)].manageMoney("Einzahlung", amount, '+');
+			calculateIndex(kNummerTO).manageMoney("Einzahlung", amount, '+');
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class BankImpl implements BankKundenSicht{
 	@Override
 	public void showMoney(int kNummer){
 		
-		System.out.println(">> " + konten[calculateIndex(kNummer)].getKStand() + " Konto: " + konten[calculateIndex(kNummer)].getKnummer());
+		System.out.println(">> " + calculateIndex(kNummer).getKStand() + " Konto: " + calculateIndex(kNummer).getKnummer());
 	}
 
 	public void verzinsen() throws MoneyException {
@@ -90,6 +90,8 @@ public class BankImpl implements BankKundenSicht{
 				return;
 	}
 	
-	private int calculateIndex(int kontoNummer){ return kontoNummer-2000; }
+	private Konto calculateIndex(int kontoNummer){ return konten[kontoNummer-2000]; }
+	
+	private void calculateIndex(int kontoNummer, Konto obj){ konten[kontoNummer-2000] = obj; }
 
 }

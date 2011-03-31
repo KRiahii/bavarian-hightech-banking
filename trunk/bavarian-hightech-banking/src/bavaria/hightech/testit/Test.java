@@ -25,7 +25,7 @@ public class Test {
 		konto1.verzinsen();
 		konto1.verzinsen();
 		konto1.verzinsen();
-		konto1.manageMoney("test", 4000, '-');
+		//konto1.manageMoney("test", 4000, '-');
 
 		System.out.println(konto1.toString());
 		
