@@ -5,7 +5,7 @@ import bavaria.hightech.banking.Konto.MoneyException;
 public class BankImpl implements BankKundenSicht{
 	
 	@SuppressWarnings("serial")
-	public class TypException extends Exception {
+	public class TypException extends RuntimeException {
 		
 		public TypException() { 
 			super(); 
@@ -26,7 +26,7 @@ public class BankImpl implements BankKundenSicht{
 	}
 	
 	@Override
-	public void createAcc(String typ, float zins, String kInhaber) throws TypException {
+	public void createAcc(String typ, float zins, String kInhaber) {
 		
 		if( typ.equals("GiroKonto") )
 			calculateIndex(2000+count, new GiroKonto(zins, 2000+count++, kInhaber));
@@ -34,11 +34,8 @@ public class BankImpl implements BankKundenSicht{
 		else if( typ.equals("FestgeldKonto") )
 			calculateIndex(2000+count, new FestgeldKonto(zins, 2000+count++, kInhaber));
 		
-		else{
-			
-			throw new TypException("Ungültiger Typ");
-		}
-			
+		else
+			throw new TypException("Ungültiger Typ");	
 	}
 	
 	@Override
@@ -106,5 +103,4 @@ public class BankImpl implements BankKundenSicht{
 	private Konto calculateIndex(int kontoNummer){ return konten[kontoNummer-2000]; }
 	
 	private void calculateIndex(int kontoNummer, Konto obj){ konten[kontoNummer-2000] = obj; }
-
 }
