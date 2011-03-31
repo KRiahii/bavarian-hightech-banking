@@ -1,7 +1,5 @@
 package bavaria.hightech.banking;
 
-import bavaria.hightech.banking.Konto.MoneyException;
-
 
 /**
  * 

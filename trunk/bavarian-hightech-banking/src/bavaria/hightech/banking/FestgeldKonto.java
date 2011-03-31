@@ -1,7 +1,5 @@
 package bavaria.hightech.banking;
 
-import bavaria.hightech.banking.Konto.MoneyException;
-
 /**
  * 
  * FestgeldKonto mit einem HabeZins Attribut
