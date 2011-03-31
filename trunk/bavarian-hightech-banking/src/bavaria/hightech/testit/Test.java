@@ -1,6 +1,7 @@
 package bavaria.hightech.testit;
 
 import bavaria.hightech.banking.*;
+import bavaria.hightech.banking.BankImpl.TypException;
 import bavaria.hightech.banking.Konto.MoneyException;
 
 /**
@@ -11,7 +12,7 @@ import bavaria.hightech.banking.Konto.MoneyException;
 
 public class Test {
 	
-	public static void main(String[] args) throws MoneyException {
+	public static void main(String[] args) throws MoneyException, TypException {
 
 		Konto konto1 = new FestgeldKonto(2.34f, 202973324, "Herr Bauer");
 		

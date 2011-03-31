@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 
 public abstract class Konto {
 	
+	@SuppressWarnings("serial")
 	public class MoneyException extends Exception {
 		public MoneyException() { 
 			super(); 
@@ -56,12 +57,12 @@ public abstract class Konto {
 	
 		if( amount < 0 ){
 			
-			throw new MoneyException("Ungültiger Betrag" + amount);
+			throw new MoneyException("Ungültiger Betrag " + amount);
 		}
 		
 		if( sign != '+' && sign != '-' ){
 			
-			throw new MoneyException(">> Ungültiges Vorzeichen" + sign);
+			throw new MoneyException("Ungültiges Vorzeichen " + sign);
 		}
 		
 		verbuchen(reason, amount, sign);

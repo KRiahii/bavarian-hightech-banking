@@ -1,7 +1,19 @@
 package bavaria.hightech.banking;
 
 public class Buchung {
-
+	
+	@SuppressWarnings("serial")
+	public class NullPointerException extends RuntimeException {
+		
+		public NullPointerException() { 
+			super(); 
+		}
+		
+	    public NullPointerException(String s) { 
+	    	super(s); 
+	    }
+	}
+	
 	private Buchungsliste h;
 	private Buchungsliste pos;
 	
@@ -14,6 +26,7 @@ public class Buchung {
 	public void add(String reason, String amount, char sign){
 		
 		Buchungsliste obj = h;
+		
 		while(obj.next != null)
 			obj = obj.next;
 		
@@ -22,18 +35,18 @@ public class Buchung {
 	
 	public void clear(){ this.h.next = null; }
 	
-	public Buchungsliste next(){ 
+	public Buchungsliste next() { 
 		
 		if(pos.next != null)
 			this.pos = pos.next;
+		
 		else
-			return null;
+			throw new NullPointerException();
 		
 		return pos;
 		}
 	
 	public void resetIteration(){ this.pos = this.h; }
-
 
 	private static class Buchungsliste {
 		String reason;
@@ -60,6 +73,4 @@ public class Buchung {
 		}
 		return sb.toString();
 	}
-
-	
 }
