@@ -1,60 +1,48 @@
 package bavaria.hightech.banking;
 
-public class Buchung {
+public class Buchungsliste {
 	
-	@SuppressWarnings("serial")
-	public class NullPointerException extends RuntimeException {
-		
-		public NullPointerException() { 
-			super(); 
-		}
-		
-	    public NullPointerException(String s) { 
-	    	super(s); 
-	    }
-	}
+	private Buchung h;
+	private Buchung pos;
 	
-	private Buchungsliste h;
-	private Buchungsliste pos;
-	
-	public Buchung(){
+	public Buchungsliste(){
 		
-		this.h = new Buchungsliste(null, null, ' ', null);
+		this.h = new Buchung(null, null, ' ', null);
 		this.pos = h;
 	}
 	
 	public void add(String reason, String amount, char sign){
 		
-		Buchungsliste obj = h;
+		Buchung obj = h;
 		
 		while(obj.next != null)
 			obj = obj.next;
 		
-		obj.next = new Buchungsliste(reason, amount, sign, null);
+		obj.next = new Buchung(reason, amount, sign, null);
 	}
 	
 	public void clear(){ this.h.next = null; }
 	
-	public Buchungsliste next() { 
+	public Buchung next() { 
 		
 		if(pos.next != null)
 			this.pos = pos.next;
 		
 		else
-			throw new NullPointerException();
+			return null;
 		
 		return pos;
 		}
 	
 	public void resetIteration(){ this.pos = this.h; }
 
-	private static class Buchungsliste {
+	private static class Buchung {
 		String reason;
 		String amount;
 		char sign;
-		Buchungsliste next;
+		Buchung next;
  
-		Buchungsliste(String reason, String amount, char sign, Buchungsliste next) {
+		Buchung(String reason, String amount, char sign, Buchung next) {
 			this.reason = reason;
 			this.amount = amount;
 			this.next = next;
@@ -65,7 +53,7 @@ public class Buchung {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		Buchungsliste lnk = h.next;
+		Buchung lnk = h.next;
 		while (lnk != null) {
 			sb.append("> " + lnk.reason + ": " + lnk.sign + lnk.amount );
 			sb.append('\n');

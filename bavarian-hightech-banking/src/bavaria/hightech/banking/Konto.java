@@ -29,7 +29,7 @@ public abstract class Konto {
 	private int kNummer;
 	private double kStand;
 	private String kInhaber;
-	private Buchung buchungen;
+	private Buchungsliste buchungen;
 	
 	public Konto(int kNummer, String kInhaber){
 	
@@ -37,7 +37,7 @@ public abstract class Konto {
 		this.kInhaber = kInhaber;
 		this.kStand = 0;
 		
-		this.buchungen = new Buchung();
+		this.buchungen = new Buchungsliste();
 	}
 	
 	/**get_kInhaber()

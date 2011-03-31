@@ -70,5 +70,9 @@ public class Test {
 		bank.showMoney(2001);
 
 		bank.list();
+		
+		
+		System.out.println("--------------------------");
+		System.out.println(bank.kontoAuszug(2001));
 	}
 }

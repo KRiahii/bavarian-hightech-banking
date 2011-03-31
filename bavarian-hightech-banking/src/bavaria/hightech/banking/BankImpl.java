@@ -101,6 +101,8 @@ public class BankImpl implements BankKundenSicht{
 				return;
 	}
 	
+	public String kontoAuszug(int kontoNummer){ return calculateIndex(kontoNummer).toString(); }
+	
 	private Konto calculateIndex(int kontoNummer){ return konten[kontoNummer-2000]; }
 	
 	private void calculateIndex(int kontoNummer, Konto obj){ konten[kontoNummer-2000] = obj; }
