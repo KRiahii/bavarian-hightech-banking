@@ -1,6 +1,7 @@
 package bavaria.hightech.banking;
 
 import java.text.NumberFormat;
+import bavaria.hightech.exceptions.MoneyException;
 
 /**
  * 
@@ -15,16 +16,7 @@ import java.text.NumberFormat;
 
 public abstract class Konto {
 	
-	@SuppressWarnings("serial")
-	public class MoneyException extends Exception {
-		public MoneyException() { 
-			super(); 
-		}
-		
-	    public MoneyException(String s) { 
-	    	super(s); 
-	    }
-	}
+
 
 	private int kNummer;
 	private double kStand;
@@ -109,5 +101,6 @@ public abstract class Konto {
 	}
 	
 	abstract public void printTyp();
+
 	abstract public void verzinsen() throws MoneyException;
 }

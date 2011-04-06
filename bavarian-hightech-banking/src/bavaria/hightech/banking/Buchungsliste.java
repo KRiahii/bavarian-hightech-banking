@@ -1,63 +1,53 @@
 package bavaria.hightech.banking;
 
 public class Buchungsliste {
-	
+
 	private Buchung h;
 	private Buchung pos;
-	
-	public Buchungsliste(){
-		
+
+	public Buchungsliste() {
+
 		this.h = new Buchung(null, null, ' ', null);
 		this.pos = h;
 	}
-	
-	public void add(String reason, String amount, char sign){
-		
+
+	public void add(String reason, String amount, char sign) {
+
 		Buchung obj = h;
-		
-		while(obj.next != null)
-			obj = obj.next;
-		
-		obj.next = new Buchung(reason, amount, sign, null);
+
+		while (obj.getNext() != null)
+			obj = obj.getNext();
+
+		obj.creatNext(reason, amount, sign, null);
 	}
-	
-	public void clear(){ this.h.next = null; }
-	
-	public Buchung next() { 
-		
-		if(pos.next != null)
-			this.pos = pos.next;
-		
+
+	public void clear() {
+		this.h = new Buchung(null, null, ' ', null);
+	}
+
+	Buchung next() {
+
+		if (pos.getNext() != null)
+			this.pos = pos.getNext();
+
 		else
 			return null;
-		
-		return pos;
-		}
-	
-	public void resetIteration(){ this.pos = this.h; }
 
-	private static class Buchung {
-		String reason;
-		String amount;
-		char sign;
-		Buchung next;
- 
-		Buchung(String reason, String amount, char sign, Buchung next) {
-			this.reason = reason;
-			this.amount = amount;
-			this.next = next;
-			this.sign = sign;
-		}
+		return pos;
 	}
-	
+
+	public void resetIteration() {
+		this.pos = this.h;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		Buchung lnk = h.next;
+		Buchung lnk = h.getNext();
 		while (lnk != null) {
-			sb.append("> " + lnk.reason + ": " + lnk.sign + lnk.amount );
+			sb.append("> " + lnk.getReason() + ": " + lnk.getSign() + lnk.getAmount());
 			sb.append('\n');
-			lnk = lnk.next;
+			lnk = lnk.getNext();
 		}
 		return sb.toString();
 	}
