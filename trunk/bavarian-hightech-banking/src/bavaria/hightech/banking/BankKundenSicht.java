@@ -9,6 +9,6 @@ public interface BankKundenSicht {
 	void createAcc(String typ, float zins, String kInhaber);
 
 	void addMoney(double amount, int kNummer);
-	
+
 	void showMoney(int kNummer);
 }
