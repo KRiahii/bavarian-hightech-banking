@@ -1,5 +1,6 @@
 package bavaria.hightech.banking;
 
+import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 
 /**
@@ -35,30 +36,31 @@ public class GiroKonto extends Konto {
 	 */
 	public void HabeZins(float HabeZins) throws MoneyException {
 
-		double amount = (this.getKStand() / 100) * gk.getHabezins();
-		this.manageMoney("HabeZins", amount, '+');
+		long amount = (long) ((this.getKStand() / 100) * gk.getHabezins());
+		this.manageMoney("HabeZins", amount, '+', this.kStand.getCurrency());
 	}
 
 	@Override
 	public void verzinsen() throws MoneyException {
 
-		double amount = ((this.getKStand() / 100) * gk.getSollzins()) * -1;
-																
-		this.manageMoney("SollZins", amount, '-');
+		long amount = (long) (((this.getKStand() / 100) * gk.getSollzins()) * -1);
+
+		this.manageMoney("SollZins", amount, '-', this.kStand.getCurrency());
 	}
-	
+
 	@Override
-	public void manageMoney(String reason, double amount, char sign)
+	public void manageMoney(String reason, long amount, char sign, Currency currency)
 			throws MoneyException {
+		Money money = new Money(amount, currency);
 
 		if (sign == '-')
-			if (this.getKStand() - amount < gk.getUeberziehungsrahmen()*-1) {
+			if (this.getKStand() - money.getValue() < gk.getUeberziehungsrahmen() * -1) {
 
 				throw new MoneyException("Überziehungsrahmen überschritten!"
-						+ getKStand() + " " + amount);
+						+ getKStand() + " " + money.getValue());
 			}
 
-		super.verbuchen(reason, amount, sign);
+		super.verbuchen(reason, amount, sign, currency);
 	}
 
 	@Override
