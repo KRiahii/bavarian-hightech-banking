@@ -43,7 +43,7 @@ public class Test {
 		System.out.println("--------------------------");
 		bank.addMoney(1, 2000, Money.Currency.JAPANISCHERYEN);
 		bank.addMoney(2, 2000, Money.Currency.USDOLLAR);
-		bank.addMoney(3, 2000, Money.Currency.SCHWEIZERFRANKEN);
+		bank.addMoney(300, 2000, Money.Currency.USDOLLAR);
 		bank.addMoney(4, 2000, Money.Currency.EURO);
 		bank.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
 		System.out.println(bank.kontoAuszug(2000));
