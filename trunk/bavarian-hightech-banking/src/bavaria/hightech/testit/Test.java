@@ -14,42 +14,13 @@ public class Test {
 
 	public static void main(String[] args) throws MoneyException, TypException {
 
-		Konto konto1 = new FestgeldKonto(2.34f, 202973324, "Herr Bauer");
-
-		System.out.println("-------------------------");
-
-		konto1.printTyp();
-		konto1.manageMoney("Gutschrift", 240.77, '+');
-		konto1.manageMoney("Rechnung", 120, '-');
-		konto1.manageMoney("Gehalt", 3200.00, '+');
-		konto1.verzinsen();
-		konto1.verzinsen();
-		konto1.verzinsen();
-		konto1.verzinsen();
-		// konto1.manageMoney("test", 4000, '-');
-
-		System.out.println(konto1.toString());
-
-		System.out.println("-------------------------");
-
-		Konto konto2 = new GiroKonto(5.49f, 202973998, "Frau Müller");
-
-		konto2.printTyp();
-		konto2.manageMoney("Gehalt", 2800, '+');
-		konto2.manageMoney("Miete", 780, '-');
-		konto2.manageMoney("Urlaub", 3800, '-');
-		konto2.verzinsen();
-		konto2.manageMoney("Gehalt", 2800, '+');
-		System.out.println();
-		System.out.println(konto2.toString());
-
 		BankImpl bank = new BankImpl();
 
-		bank.createAcc("FestgeldKonto", 2.34f, "A");
-		bank.createAcc("FestgeldKonto", 2.34f, "B");
-		bank.createAcc("GiroKonto", 5.49f, "C");
-		bank.createAcc("GiroKonto", 5.49f, "D");
-		bank.createAcc("GiroKonto", 5.49f, "E");
+		bank.createAcc("FestgeldKonto", "A", 1);
+		bank.createAcc("FestgeldKonto", "B", 0);
+		bank.createAcc("GiroKonto", "C", 0);
+		bank.createAcc("GiroKonto", "D", 1);
+		bank.createAcc("GiroKonto", "E", 2);
 
 		bank.addMoney(12432, 2000);
 		bank.addMoney(3200, 2001);
@@ -76,6 +47,21 @@ public class Test {
 		bank.addMoney(4, 2000);
 		bank.requestMoney(4, 2000);
 		System.out.println(bank.kontoAuszug(2000));
+<<<<<<< .mine
+		
+		System.out.println();
+		System.out.println("--------------------------");
+		bank.showFestgeldkonditionen();
+		
+		FestgeldKonditionen obj = new FestgeldKonditionen(7.23f, 99);
+		bank.addKondition(obj);
+		
+		System.out.println();
+		System.out.println("--------------------------");
+		bank.showFestgeldkonditionen();
+
+
+=======
 
 		Money geld = new Money(100, Money.Currency.USDOLLAR);
 		geld.add(10000, Money.Currency.JAPANISCHERYEN);
@@ -84,5 +70,6 @@ public class Test {
 		geld.changeCurrency(Money.Currency.SCHWEIZERFRANKEN);
 		System.out.print(geld.getValue());
 		System.out.print(geld.getCurrency());
+>>>>>>> .r16
 	}
 }

@@ -12,7 +12,7 @@ import bavaria.hightech.exceptions.MoneyException;
 
 public class GiroKonto extends Konto {
 
-	private float SollZins;
+	private GiroKonditionen gk;
 
 	/**
 	 * GiroKonto()
@@ -22,10 +22,10 @@ public class GiroKonto extends Konto {
 	 * @param kInhaber
 	 */
 
-	public GiroKonto(float SollZins, int kNummer, String kInhaber) {
+	public GiroKonto(int kNummer, String kInhaber, GiroKonditionen gk) {
 
 		super(kNummer, kInhaber);
-		this.SollZins = SollZins;
+		this.gk = gk;
 	}
 
 	/**
@@ -35,15 +35,30 @@ public class GiroKonto extends Konto {
 	 */
 	public void HabeZins(float HabeZins) throws MoneyException {
 
-		double amount = (this.getKStand() / 100) * HabeZins;
+		double amount = (this.getKStand() / 100) * gk.getHabezins();
 		this.manageMoney("HabeZins", amount, '+');
 	}
 
 	@Override
 	public void verzinsen() throws MoneyException {
 
-		double amount = ((this.getKStand() / 100) * this.SollZins) * -1;
+		double amount = ((this.getKStand() / 100) * gk.getSollzins()) * -1;
+																
 		this.manageMoney("SollZins", amount, '-');
+	}
+	
+	@Override
+	public void manageMoney(String reason, double amount, char sign)
+			throws MoneyException {
+
+		if (sign == '-')
+			if (this.getKStand() - amount < gk.getUeberziehungsrahmen()*-1) {
+
+				throw new MoneyException("Überziehungsrahmen überschritten!"
+						+ getKStand() + " " + amount);
+			}
+
+		super.verbuchen(reason, amount, sign);
 	}
 
 	@Override
