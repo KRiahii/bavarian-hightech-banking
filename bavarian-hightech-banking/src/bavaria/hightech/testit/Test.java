@@ -39,7 +39,7 @@ public class Test {
 
 		System.out.println("--------------------------");
 		System.out.println(bank.kontoAuszug(2001));
-
+		
 		System.out.println("--------------------------");
 		bank.addMoney(1, 2000);
 		bank.addMoney(2, 2000);
@@ -47,7 +47,6 @@ public class Test {
 		bank.addMoney(4, 2000);
 		bank.requestMoney(4, 2000);
 		System.out.println(bank.kontoAuszug(2000));
-<<<<<<< .mine
 		
 		System.out.println();
 		System.out.println("--------------------------");
@@ -61,15 +60,5 @@ public class Test {
 		bank.showFestgeldkonditionen();
 
 
-=======
-
-		Money geld = new Money(100, Money.Currency.USDOLLAR);
-		geld.add(10000, Money.Currency.JAPANISCHERYEN);
-		System.out.print(geld.getValue());
-		System.out.print(geld.getCurrency());
-		geld.changeCurrency(Money.Currency.SCHWEIZERFRANKEN);
-		System.out.print(geld.getValue());
-		System.out.print(geld.getCurrency());
->>>>>>> .r16
 	}
 }
