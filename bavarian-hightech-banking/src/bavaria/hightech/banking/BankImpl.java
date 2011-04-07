@@ -1,5 +1,6 @@
 package bavaria.hightech.banking;
 
+import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
 
@@ -35,36 +36,36 @@ public class BankImpl implements BankKundenSicht, BankAdministration {
 	}
 
 	@Override
-	public void addMoney(double amount, int kNummer) {
+	public void addMoney(long amount, int kNummer, Currency currency) {
 
 		try {
-			calculateIndex(kNummer).manageMoney("Eingezahlt", amount, '+');
+			calculateIndex(kNummer).manageMoney("Eingezahlt", amount, '+', currency);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void requestMoney(double amount, int kNummer) {
+	public void requestMoney(long amount, int kNummer, Currency currency) {
 
 		try {
-			calculateIndex(kNummer).manageMoney("Abgehoben", amount, '-');
+			calculateIndex(kNummer).manageMoney("Abgehoben", amount, '-', currency);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void transferMoney(double amount, int kNummerFROM, int kNummerTO) {
+	public void transferMoney(long amount, int kNummerFROM, int kNummerTO, Currency currencyFROM, Currency currencyTO) {
 
 		try {
-			calculateIndex(kNummerFROM).manageMoney("Überweisung", amount, '-');
+			calculateIndex(kNummerFROM).manageMoney("Überweisung", amount, '-', currencyFROM);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			calculateIndex(kNummerTO).manageMoney("Einzahlung", amount, '+');
+			calculateIndex(kNummerTO).manageMoney("Einzahlung", amount, '+', currencyTO);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}

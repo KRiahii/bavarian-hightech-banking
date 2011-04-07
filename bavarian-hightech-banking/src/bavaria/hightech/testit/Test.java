@@ -22,13 +22,13 @@ public class Test {
 		bank.createAcc("GiroKonto", "D", 1);
 		bank.createAcc("GiroKonto", "E", 2);
 
-		bank.addMoney(12432, 2000);
-		bank.addMoney(3200, 2001);
-		bank.addMoney(46345, 2002);
-		bank.addMoney(313254, 2003);
-		bank.addMoney(4040, 2004);
+		bank.addMoney(12432, 2000, Money.Currency.BRITISCHESPFUND);
+		bank.addMoney(3200, 2001, Money.Currency.EURO);
+		bank.addMoney(46345, 2002, Money.Currency.JAPANISCHERYEN);
+		bank.addMoney(313254, 2003, Money.Currency.USDOLLAR);
+		bank.addMoney(4040, 2004, Money.Currency.BRITISCHESPFUND);
 
-		bank.transferMoney(500, 2000, 2001);
+		bank.transferMoney(500, 2000, 2001, Money.Currency.EURO, Money.Currency.JAPANISCHERYEN);
 
 		System.out.println();
 		System.out.println("-------------------------");
@@ -41,11 +41,11 @@ public class Test {
 		System.out.println(bank.kontoAuszug(2001));
 		
 		System.out.println("--------------------------");
-		bank.addMoney(1, 2000);
-		bank.addMoney(2, 2000);
-		bank.addMoney(3, 2000);
-		bank.addMoney(4, 2000);
-		bank.requestMoney(4, 2000);
+		bank.addMoney(1, 2000, Money.Currency.JAPANISCHERYEN);
+		bank.addMoney(2, 2000, Money.Currency.USDOLLAR);
+		bank.addMoney(3, 2000, Money.Currency.SCHWEIZERFRANKEN);
+		bank.addMoney(4, 2000, Money.Currency.EURO);
+		bank.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
 		System.out.println(bank.kontoAuszug(2000));
 		
 		System.out.println();

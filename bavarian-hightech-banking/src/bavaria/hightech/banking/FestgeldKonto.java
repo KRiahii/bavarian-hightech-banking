@@ -1,5 +1,6 @@
 package bavaria.hightech.banking;
 
+import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 
 /**
@@ -10,6 +11,8 @@ import bavaria.hightech.exceptions.MoneyException;
  */
 
 public class FestgeldKonto extends Konto {
+
+	private FestgeldKonditionen fk;
 
 	/**
 	 * FestgeldKonto()
@@ -26,8 +29,8 @@ public class FestgeldKonto extends Konto {
 	@Override
 	public void verzinsen() throws MoneyException {
 
-		double amount = (this.getKStand() / 100) * 2; // ÄNDERUNG!!! <--- * ZINS
-		this.manageMoney("Zins", amount, '+');
+		long amount = (long) ((this.getKStand() / 100) * fk.getZins());
+		this.manageMoney("Zins", amount, '+', this.kStand.getCurrency());
 	}
 
 	@Override
@@ -42,16 +45,17 @@ public class FestgeldKonto extends Konto {
 	 */
 
 	@Override
-	public void manageMoney(String reason, double amount, char sign)
+	public void manageMoney(String reason, long amount, char sign, Currency currency)
 			throws MoneyException {
+		Money money = new Money(amount, currency);
 
 		if (sign == '-')
-			if (this.getKStand() - amount < 0) {
+			if (this.getKStand() - money.getValue() < 0) {
 
 				throw new MoneyException("Nicht genug Geld vorhanden "
-						+ getKStand() + " " + amount);
+						+ getKStand() + " " + money.getValue());
 			}
 
-		super.verbuchen(reason, amount, sign);
+		super.verbuchen(reason, amount, sign, currency);
 	}
 }
