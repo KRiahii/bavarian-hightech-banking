@@ -11,8 +11,6 @@ import bavaria.hightech.exceptions.MoneyException;
 
 public class FestgeldKonto extends Konto {
 
-	private float zins;
-
 	/**
 	 * FestgeldKonto()
 	 * 
@@ -20,16 +18,15 @@ public class FestgeldKonto extends Konto {
 	 * @param kNummer
 	 * @param kInhaber
 	 */
-	public FestgeldKonto(float zins, int kNummer, String kInhaber) {
+	public FestgeldKonto(int kNummer, String kInhaber, FestgeldKonditionen fk) {
 
 		super(kNummer, kInhaber);
-		this.zins = zins;
 	}
 
 	@Override
 	public void verzinsen() throws MoneyException {
 
-		double amount = (this.getKStand() / 100) * this.zins;
+		double amount = (this.getKStand() / 100) * 2; // ÄNDERUNG!!! <--- * ZINS
 		this.manageMoney("Zins", amount, '+');
 	}
 
