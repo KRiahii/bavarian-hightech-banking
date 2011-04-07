@@ -20,7 +20,7 @@ public class Buchungsliste {
 		while (obj.getNext() != null)
 			obj = obj.getNext();
 
-		obj.creatNext(reason, amount, sign, null, null);
+		obj.creatNext(reason, amount, sign, null, currency);
 	}
 
 	public void clear() {
