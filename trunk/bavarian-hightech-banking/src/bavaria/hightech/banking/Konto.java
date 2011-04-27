@@ -1,9 +1,12 @@
 package bavaria.hightech.banking;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
+import bavaria.hightech.time.Zeitgeber;
 
 /**
  * 
@@ -19,6 +22,9 @@ public abstract class Konto {
 	protected Money kStand;
 	private String kInhaber;
 	private Buchungsliste buchungen;
+	private Zeitgeber createdate;
+	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
 
 	public Konto(int kNummer, String kInhaber) {
 
@@ -26,6 +32,7 @@ public abstract class Konto {
 		this.kInhaber = kInhaber;
 		this.kStand = new Money(0, Money.Currency.EURO);
 		this.buchungen = new Buchungsliste();
+		createdate = Zeitgeber.getZeitgeber();
 	}
 
 	/**
@@ -44,6 +51,11 @@ public abstract class Konto {
 	 */
 	public long getKStand() {
 		return kStand.getValue();
+	}
+	
+	@SuppressWarnings("static-access")
+	public Calendar getCreatdate() {
+		return createdate.getCalender();
 	}
 
 	/**
@@ -105,6 +117,7 @@ public abstract class Konto {
 		n.setMaximumFractionDigits(2);
 
 		StringBuilder sb = new StringBuilder();
+		sb.append("Erstellungsdatum: " +  df.format(getCreatdate().getTime()) + " " + tf.format(getCreatdate().getTime())).append("\n");
 		sb.append("Name: " + getInhaber()).append("\n");
 		sb.append("Kontonummer: " + getKnummer()).append("\n");
 		sb.append("Guthaben: " + n.format(getKStand())).append("\n");
