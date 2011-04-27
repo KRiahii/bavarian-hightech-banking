@@ -1,6 +1,9 @@
 package bavaria.hightech.banking;
 
+import java.util.Calendar;
+
 import bavaria.hightech.banking.Money.Currency;
+import bavaria.hightech.time.Zeitgeber;
 
 public class Buchung {
 
@@ -9,6 +12,7 @@ public class Buchung {
 	private char sign;
 	private Buchung next;
 	private Currency currency;
+	private Zeitgeber buchungdate;
 
 	Buchung(String reason, String amount, char sign, Buchung next,
 			Currency currency) {
@@ -17,6 +21,7 @@ public class Buchung {
 		this.next = next;
 		this.sign = sign;
 		this.currency = currency;
+		buchungdate = Zeitgeber.getZeitgeber();
 	}
 
 	public void creatNext(String reason, String amount, char sign,
@@ -43,6 +48,11 @@ public class Buchung {
 
 	public Currency getCurrency() {
 		return this.currency;
+	}
+	
+	@SuppressWarnings("static-access")
+	public Calendar getBuchungdate() {
+		return buchungdate.getCalender();
 	}
 
 }

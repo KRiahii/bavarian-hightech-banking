@@ -1,12 +1,16 @@
 package bavaria.hightech.banking;
 
+import java.text.DateFormat;
+
 import bavaria.hightech.banking.Money.Currency;
 
 public class Buchungsliste {
 
 	private Buchung h;
 	private Buchung pos;
-
+	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
+	
 	public Buchungsliste() {
 
 		this.h = new Buchung(null, null, ' ', null, null);
@@ -48,7 +52,7 @@ public class Buchungsliste {
 		Buchung lnk = h.getNext();
 		while (lnk != null) {
 			sb.append("> " + lnk.getReason() + ": " + lnk.getSign()
-					+ lnk.getAmount() + " " + lnk.getCurrency());
+					+ lnk.getAmount() + " " + lnk.getCurrency() + " " + df.format(h.getBuchungdate().getTime()) + " " + tf.format(h.getBuchungdate().getTime()));
 			sb.append('\n');
 			lnk = lnk.getNext();
 		}
