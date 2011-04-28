@@ -3,18 +3,24 @@ package bavaria.hightech.time;
 import java.util.TimerTask;
 import java.util.Timer;
 import java.util.Calendar;
-import java.text.DateFormat;
 
 public final class TimeEmitter {
 
-	private static Calendar calender;
+	private static Calendar calendar;
 	private static TimeEmitter timeEmitter;
+	private Calendar revcalendar;
 
 	private TimeEmitter() {
-		calender = Calendar.getInstance();
-		new Quarz().startTiming();
-		Clock clock = new Clock();
-		clock.start();
+		calendar = Calendar.getInstance();
+		revcalendar = Calendar.getInstance();
+	}
+	
+	public void elapstime (int time) {
+		Quarz quarz = new Quarz();
+		revcalendar.add(Calendar.DATE, time);
+		quarz.startTimeing();
+		while (calendar.before(revcalendar));
+		quarz.stopTimeing();	
 	}
 
 	public static TimeEmitter getTimeEmitter() {
@@ -24,27 +30,33 @@ public final class TimeEmitter {
 		return timeEmitter;
 	}
 
-	public static Calendar getCalender() {
-		return (Calendar) calender.clone();
+	public Calendar getCalender() {
+		return (Calendar) calendar.clone();
 	}
 
 	public class Quarz {
-		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-		DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
+		private Timer timer;
+		private Clock clock;
 
-		private final void timewarper(final int value) {
-			calender.add(Calendar.MINUTE, value);
-			// System.out.println("Jetzt: " + df.format(c.getTime()) + " " +
-			// tf.format(c.getTime()));
+		private void timewarper(int value) {
+			calendar.add(Calendar.SECOND, value);
 		}
 
-		public final void startTiming() {
-			Timer timer = new Timer();
+		public void startTimeing() {
+			timer = new Timer();
+			clock = new Clock();
+			
 			timer.scheduleAtFixedRate(new TimerTask() {
 				public void run() {
-					Quarz.this.timewarper(1000);
+					Quarz.this.timewarper(6000);
+					clock.start();
 				}
 			}, 0, 10);
+		}
+		
+		public void stopTimeing() {
+			timer.cancel();
+			clock.stop();	
 		}
 	}
 }

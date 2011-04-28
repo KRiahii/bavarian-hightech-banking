@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Clock extends JFrame {
-	private static final int TICK_PERIOD = 10;
+	private static final int TICK_PERIOD = 100;
 	private Timer ticker;
 	private JPanel panel;
 
@@ -26,7 +26,7 @@ public class Clock extends JFrame {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			Calendar cal = TimeEmitter.getCalender();
+			Calendar cal = TimeEmitter.getTimeEmitter().getCalender();
 			Date date = cal.getTime();
 			DateFormat dateFormatter = DateFormat.getTimeInstance();
 			g.setFont(new Font(null, Font.PLAIN, 20));
@@ -48,5 +48,9 @@ public class Clock extends JFrame {
 	public void start() {
 		ticker = new Timer(true);
 		ticker.scheduleAtFixedRate(new TickerTask(), 0, TICK_PERIOD);
+	}
+	
+	public void stop() {
+		ticker.cancel();
 	}
 }
