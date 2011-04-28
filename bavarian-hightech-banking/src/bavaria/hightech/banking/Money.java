@@ -60,57 +60,67 @@ public class Money {
 		}
 	}
 
-	public void add(long value, Currency currency) {
+	public void addMoney(long value, Currency currency) {
 		switch (currency) {
 		case EURO:
 			this.value = (long) (this.value + (value * Currency.EURO
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case USDOLLAR:
 			this.value = (long) (this.value + (value * Currency.USDOLLAR
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case SCHWEIZERFRANKEN:
 			this.value = (long) (this.value + (value * Currency.SCHWEIZERFRANKEN
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case JAPANISCHERYEN:
 			this.value = (long) (this.value + (value * Currency.JAPANISCHERYEN
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case BRITISCHESPFUND:
 			this.value = (long) (this.value + (value * Currency.BRITISCHESPFUND
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		}
 	}
 
-	public void sub(long value, Currency currency) {
+	public void subMoney(long value, Currency currency) {
 		switch (currency) {
 		case EURO:
 			this.value = (long) (this.value - (value * Currency.EURO
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case USDOLLAR:
 			this.value = (long) (this.value - (value * Currency.USDOLLAR
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case SCHWEIZERFRANKEN:
 			this.value = (long) (this.value - (value * Currency.SCHWEIZERFRANKEN
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case JAPANISCHERYEN:
 			this.value = (long) (this.value - (value * Currency.JAPANISCHERYEN
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		case BRITISCHESPFUND:
 			this.value = (long) (this.value - (value * Currency.BRITISCHESPFUND
-					.getFactor()) / this.currency.getFactor());
+					.getFactor())
+					/ this.currency.getFactor());
 			break;
 		}
 	}
 
-	public boolean equal(long value) {
+	public boolean equalMoney(long value) {
 		if (this.value == value) {
 			return true;
 		} else {
@@ -118,7 +128,7 @@ public class Money {
 		}
 	}
 
-	public boolean bigger(long value) {
+	public boolean isBigger(long value) {
 		if (this.value > value) {
 			return true;
 		} else {
@@ -126,7 +136,7 @@ public class Money {
 		}
 	}
 
-	public boolean smaler(long value) {
+	public boolean isSmaler(long value) {
 		if (this.value < value) {
 			return true;
 		} else {
@@ -139,4 +149,5 @@ public class Money {
 				.getFactor());
 		setCurrency(currency);
 	}
+
 }

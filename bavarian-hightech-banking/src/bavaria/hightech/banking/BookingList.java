@@ -4,22 +4,22 @@ import java.text.DateFormat;
 
 import bavaria.hightech.banking.Money.Currency;
 
-public class Buchungsliste {
+public class BookingList {
 
-	private Buchung h;
-	private Buchung pos;
+	private Accounting h;
+	private Accounting pos;
 	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
-	
-	public Buchungsliste() {
 
-		this.h = new Buchung(null, null, ' ', null, null);
+	public BookingList() {
+
+		this.h = new Accounting(null, null, ' ', null, null);
 		this.pos = h;
 	}
 
 	public void add(String reason, String amount, char sign, Currency currency) {
 
-		Buchung obj = h;
+		Accounting obj = h;
 
 		while (obj.getNext() != null)
 			obj = obj.getNext();
@@ -28,10 +28,10 @@ public class Buchungsliste {
 	}
 
 	public void clear() {
-		this.h = new Buchung(null, null, ' ', null, null);
+		this.h = new Accounting(null, null, ' ', null, null);
 	}
 
-	Buchung next() {
+	Accounting next() {
 
 		if (pos.getNext() != null)
 			this.pos = pos.getNext();
@@ -49,10 +49,12 @@ public class Buchungsliste {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		Buchung lnk = h.getNext();
+		Accounting lnk = h.getNext();
 		while (lnk != null) {
 			sb.append("> " + lnk.getReason() + ": " + lnk.getSign()
-					+ lnk.getAmount() + " " + lnk.getCurrency() + " " + df.format(h.getBuchungdate().getTime()) + " " + tf.format(h.getBuchungdate().getTime()));
+					+ lnk.getAmount() + " " + lnk.getCurrency() + " "
+					+ df.format(h.getAccountingDate().getTime()) + " "
+					+ tf.format(h.getAccountingDate().getTime()));
 			sb.append('\n');
 			lnk = lnk.getNext();
 		}

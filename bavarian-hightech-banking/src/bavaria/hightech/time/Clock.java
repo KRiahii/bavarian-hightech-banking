@@ -26,7 +26,7 @@ public class Clock extends JFrame {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			Calendar cal = Zeitgeber.getCalender();
+			Calendar cal = TimeEmitter.getCalender();
 			Date date = cal.getTime();
 			DateFormat dateFormatter = DateFormat.getTimeInstance();
 			g.setFont(new Font(null, Font.PLAIN, 20));

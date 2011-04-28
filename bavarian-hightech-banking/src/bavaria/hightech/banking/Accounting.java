@@ -3,31 +3,31 @@ package bavaria.hightech.banking;
 import java.util.Calendar;
 
 import bavaria.hightech.banking.Money.Currency;
-import bavaria.hightech.time.Zeitgeber;
+import bavaria.hightech.time.TimeEmitter;
 
-public class Buchung {
+public class Accounting {
 
 	private String reason;
 	private String amount;
 	private char sign;
-	private Buchung next;
+	private Accounting next;
 	private Currency currency;
-	private Zeitgeber buchungdate;
+	private TimeEmitter accountingDate;
 
-	Buchung(String reason, String amount, char sign, Buchung next,
+	Accounting(String reason, String amount, char sign, Accounting next,
 			Currency currency) {
 		this.reason = reason;
 		this.amount = amount;
 		this.next = next;
 		this.sign = sign;
 		this.currency = currency;
-		buchungdate = Zeitgeber.getZeitgeber();
+		accountingDate = TimeEmitter.getTimeEmitter();
 	}
 
 	public void creatNext(String reason, String amount, char sign,
-			Buchung next, Currency currency) {
+			Accounting next, Currency currency) {
 
-		this.next = new Buchung(reason, amount, sign, next, currency);
+		this.next = new Accounting(reason, amount, sign, next, currency);
 	}
 
 	public String getReason() {
@@ -42,17 +42,17 @@ public class Buchung {
 		return this.sign;
 	}
 
-	public Buchung getNext() {
+	public Accounting getNext() {
 		return this.next;
 	}
 
 	public Currency getCurrency() {
 		return this.currency;
 	}
-	
+
 	@SuppressWarnings("static-access")
-	public Calendar getBuchungdate() {
-		return buchungdate.getCalender();
+	public Calendar getAccountingDate() {
+		return accountingDate.getCalender();
 	}
 
 }

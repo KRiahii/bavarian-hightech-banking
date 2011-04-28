@@ -4,158 +4,163 @@ import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
 
-public class BankImpl implements BankKundenSicht, BankAdministration {
+public class BankImpl implements BankCustomerView, BankAdmin {
 
-	private Konto[] konten;
+	private Account[] accounts;
 	private int count;
 
-	private GiroKonditionen[] giro;
-	private FestgeldKonditionen[] festgeld;
+	private GiroConditions[] giro;
+	private DepositConditions[] deposit;
 
 	public BankImpl() {
 
-		this.konten = new Konto[20];
+		this.accounts = new Account[20];
 		this.count = 0;
-		
-		defaultKonditionen();
+
+		defaultConditions();
 	}
 
 	@Override
-	public void createAcc(String typ, String kInhaber, int key) {
+	public void createAcc(String typ, String kHolder, int key) {
 
-		if (typ.equals("GiroKonto"))
-			calculateIndex(2000 + count, new GiroKonto(2000 + count++,
-					kInhaber, giro[key]));
+		if (typ.equals("GiroAccount"))
+			calculateIndex(2000 + count, new GiroAccount(2000 + count++,
+					kHolder, giro[key]));
 
-		else if (typ.equals("FestgeldKonto"))
-			calculateIndex(2000 + count, new FestgeldKonto(2000 + count++,
-					kInhaber, festgeld[key]));
+		else if (typ.equals("DepositAccount"))
+			calculateIndex(2000 + count, new DepositAccount(2000 + count++,
+					kHolder, deposit[key]));
 
 		else
-			throw new TypException("Ungültiger Typ");
+			throw new TypException("invalid typ");
 	}
 
 	@Override
-	public void addMoney(long amount, int kNummer, Currency currency) {
+	public void addMoney(long amount, int kNumber, Currency currency) {
 
 		try {
-			calculateIndex(kNummer).manageMoney("Eingezahlt", amount, '+', currency);
+			calculateIndex(kNumber).manageMoney("deposited", amount, '+',
+					currency);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void requestMoney(long amount, int kNummer, Currency currency) {
+	public void requestMoney(long amount, int kNumber, Currency currency) {
 
 		try {
-			calculateIndex(kNummer).manageMoney("Abgehoben", amount, '-', currency);
+			calculateIndex(kNumber).manageMoney("detached", amount, '-',
+					currency);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void transferMoney(long amount, int kNummerFROM, int kNummerTO, Currency currencyFROM, Currency currencyTO) {
+	public void transferMoney(long amount, int kNummerFROM, int kNummerTO,
+			Currency currencyFROM, Currency currencyTO) {
 
 		try {
-			calculateIndex(kNummerFROM).manageMoney("Überweisung", amount, '-', currencyFROM);
+			calculateIndex(kNummerFROM).manageMoney("bank transfer", amount, '-',
+					currencyFROM);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			calculateIndex(kNummerTO).manageMoney("Einzahlung", amount, '+', currencyTO);
+			calculateIndex(kNummerTO).manageMoney("deposit", amount, '+',
+					currencyTO);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void showMoney(int kNummer) {
+	public void showMoney(int kNumber) {
 
-		System.out.println(">> " + calculateIndex(kNummer).getKStand()
-				+ " Konto: " + calculateIndex(kNummer).getKnummer());
+		System.out.println(">> " + calculateIndex(kNumber).getAccountBalance()
+				+ " Account: " + calculateIndex(kNumber).getKnumber());
 	}
 
-	public void verzinsen() throws MoneyException {
+	public void chargeInterest() throws MoneyException {
 
-		for (int i = 0; i < konten.length; i++)
-			if (konten[i] != null)
-				konten[i].verzinsen();
+		for (int i = 0; i < accounts.length; i++)
+			if (accounts[i] != null)
+				accounts[i].payInterest();
 	}
 
 	public void list() {
 
-		for (int i = 0; i < konten.length; i++)
-			if (konten[i] != null) {
+		for (int i = 0; i < accounts.length; i++)
+			if (accounts[i] != null) {
 				System.out.println("---------------------------");
-				System.out.println(konten[i].toString());
+				System.out.println(accounts[i].toString());
 			} else
 				return;
 	}
 
-	public String kontoAuszug(int kontoNummer) {
+	public String accountsCurrent(int kontoNummer) {
 		return calculateIndex(kontoNummer).toString();
 	}
 
-	private Konto calculateIndex(int kontoNummer) {
-		return konten[kontoNummer - 2000];
+	private Account calculateIndex(int kontoNummer) {
+		return accounts[kontoNummer - 2000];
 	}
 
-	private void calculateIndex(int kontoNummer, Konto obj) {
-		konten[kontoNummer - 2000] = obj;
+	private void calculateIndex(int kontoNummer, Account obj) {
+		accounts[kontoNummer - 2000] = obj;
 	}
 
-	private void defaultKonditionen() {
+	private void defaultConditions() {
 
-		this.giro = new GiroKonditionen[3];
-		this.festgeld = new FestgeldKonditionen[3];
+		this.giro = new GiroConditions[3];
+		this.deposit = new DepositConditions[3];
 
-		giro[0] = new GiroKonditionen(100);
-		giro[1] = new GiroKonditionen(500);
-		giro[2] = new GiroKonditionen(1000);
+		giro[0] = new GiroConditions(100);
+		giro[1] = new GiroConditions(500);
+		giro[2] = new GiroConditions(1000);
 
-		festgeld[0] = new FestgeldKonditionen(1.34f, 2);
-		festgeld[1] = new FestgeldKonditionen(2.34f, 6);
-		festgeld[2] = new FestgeldKonditionen(3.34f, 12);
+		deposit[0] = new DepositConditions(1.34f, 2);
+		deposit[1] = new DepositConditions(2.34f, 6);
+		deposit[2] = new DepositConditions(3.34f, 12);
 	}
 
-	public void showFestgeldkonditionen() {
+	public void showDepositConditions() {
 
-		for (int i = 0; i < this.festgeld.length; i++)
-			System.out.println(festgeld[i].toString());
+		for (int i = 0; i < this.deposit.length; i++)
+			System.out.println(deposit[i].toString());
 	}
 
-	public void showGirokonditionen() {
+	public void showGiroConditions() {
 
 		for (int i = 0; i < this.giro.length; i++)
 			System.out.println(giro[i].toString());
 	}
 
-	public void addKondition(FestgeldKonditionen fk) {
+	public void addCondition(DepositConditions fk) {
 
-		FestgeldKonditionen[] buffer = new FestgeldKonditionen[this.festgeld.length];
-		
-		for(int i = 0; i < buffer.length; i++)
-			buffer[i] = this.festgeld[i];
-
-		this.festgeld = new FestgeldKonditionen[buffer.length + 1];
+		DepositConditions[] buffer = new DepositConditions[this.deposit.length];
 
 		for (int i = 0; i < buffer.length; i++)
-			this.festgeld[i] = buffer[i];
+			buffer[i] = this.deposit[i];
 
-		this.festgeld[buffer.length] = fk;
+		this.deposit = new DepositConditions[buffer.length + 1];
+
+		for (int i = 0; i < buffer.length; i++)
+			this.deposit[i] = buffer[i];
+
+		this.deposit[buffer.length] = fk;
 	}
 
-	public void addKondition(GiroKonditionen gk) {
+	public void addCondition(GiroConditions gk) {
 
-		GiroKonditionen[] buffer = new GiroKonditionen[this.giro.length];
-		
-		for(int i = 0; i < buffer.length; i++)
+		GiroConditions[] buffer = new GiroConditions[this.giro.length];
+
+		for (int i = 0; i < buffer.length; i++)
 			buffer[i] = this.giro[i];
 
-		this.giro = new GiroKonditionen[buffer.length + 1];
+		this.giro = new GiroConditions[buffer.length + 1];
 
 		for (int i = 0; i < buffer.length; i++)
 			this.giro[i] = buffer[i];
@@ -164,9 +169,9 @@ public class BankImpl implements BankKundenSicht, BankAdministration {
 	}
 
 	@Override
-	public void changeZins(float sollzins, float habezins) {
-		
-		for(int i = 0; i < giro.length; i++)
-			giro[i].SetZins(sollzins, habezins);
+	public void changeInterest(float debitInterest, float creditInterest) {
+
+		for (int i = 0; i < giro.length; i++)
+			giro[i].setInterest(debitInterest, creditInterest);
 	}
 }
