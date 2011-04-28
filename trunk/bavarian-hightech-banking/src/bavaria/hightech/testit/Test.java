@@ -6,7 +6,7 @@ import bavaria.hightech.exceptions.MoneyException;
 
 /**
  * 
- * Klasse zum Austesten der der "Bank" Implementierungen
+ * test class
  * 
  */
 
@@ -16,11 +16,11 @@ public class Test {
 
 		BankImpl bank = new BankImpl();
 
-		bank.createAcc("FestgeldKonto", "A", 1);
-		bank.createAcc("FestgeldKonto", "B", 0);
-		bank.createAcc("GiroKonto", "C", 0);
-		bank.createAcc("GiroKonto", "D", 1);
-		bank.createAcc("GiroKonto", "E", 2);
+		bank.createAcc("DepositAccount", "A", 1);
+		bank.createAcc("DepositAccount", "B", 0);
+		bank.createAcc("GiroAccount", "C", 0);
+		bank.createAcc("GiroAccount", "D", 1);
+		bank.createAcc("GiroAccount", "E", 2);
 
 		bank.addMoney(12432, 2000, Money.Currency.BRITISCHESPFUND);
 		bank.addMoney(3200, 2001, Money.Currency.EURO);
@@ -39,7 +39,7 @@ public class Test {
 		bank.list();
 
 		System.out.println("--------------------------");
-		System.out.println(bank.kontoAuszug(2001));
+		System.out.println(bank.accountsCurrent(2001));
 
 		System.out.println("--------------------------");
 		bank.addMoney(1, 2000, Money.Currency.JAPANISCHERYEN);
@@ -47,17 +47,17 @@ public class Test {
 		bank.addMoney(300, 2000, Money.Currency.USDOLLAR);
 		bank.addMoney(4, 2000, Money.Currency.EURO);
 		bank.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
-		System.out.println(bank.kontoAuszug(2000));
+		System.out.println(bank.accountsCurrent(2000));
 
 		System.out.println();
 		System.out.println("--------------------------");
-		bank.showFestgeldkonditionen();
+		bank.showDepositConditions();
 
-		FestgeldKonditionen obj = new FestgeldKonditionen(7.23f, 99);
-		bank.addKondition(obj);
+		DepositConditions obj = new DepositConditions(7.23f, 99);
+		bank.addCondition(obj);
 
 		System.out.println();
 		System.out.println("--------------------------");
-		bank.showFestgeldkonditionen();
+		bank.showDepositConditions();
 	}
 }
