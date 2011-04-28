@@ -11,7 +11,7 @@ public class Accounting {
 	private String amount;
 	private char sign;
 	private Currency currency;
-	private TimeEmitter accountingDate;
+	private Calendar accountingDate;
 
 	Accounting(String reason, String amount, char sign,
 			Currency currency) {
@@ -19,7 +19,7 @@ public class Accounting {
 		this.amount = amount;
 		this.sign = sign;
 		this.currency = currency;
-		accountingDate = TimeEmitter.getTimeEmitter();
+		accountingDate = TimeEmitter.getTimeEmitter().getCalender();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class Accounting {
 	 * @return
 	 */
 	public Calendar getAccountingDate() {
-		return accountingDate.getCalender();
+		return accountingDate;
 	}
 
 }

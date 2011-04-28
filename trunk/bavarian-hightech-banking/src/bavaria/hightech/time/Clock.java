@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Clock extends JFrame {
-	private static final int TICK_PERIOD = 100;
+	private static final int TICK_PERIOD = 1;
 	private Timer ticker;
 	private JPanel panel;
 
@@ -52,5 +52,6 @@ public class Clock extends JFrame {
 	
 	public void stop() {
 		ticker.cancel();
+		setVisible(false);
 	}
 }

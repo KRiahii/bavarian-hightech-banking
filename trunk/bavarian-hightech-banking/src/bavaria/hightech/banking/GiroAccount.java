@@ -1,12 +1,15 @@
 package bavaria.hightech.banking;
 
+import java.util.Calendar;
+
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
+import bavaria.hightech.time.TimeEmitter;
 
 /**
  * 
- * Giroaccount with debit interest and interest methods
- * 			-negative amount possible-
+ * Giroaccount with debit interest and interest methods -negative amount
+ * possible-
  * 
  */
 
@@ -21,7 +24,8 @@ public class GiroAccount extends Account {
 	 * 
 	 */
 
-	public GiroAccount(int kNumber, String kHolder, GiroConditions giroConditions) {
+	public GiroAccount(int kNumber, String kHolder,
+			GiroConditions giroConditions) {
 
 		super(kNumber, kHolder);
 		this.giroConditions = giroConditions;
@@ -34,8 +38,9 @@ public class GiroAccount extends Account {
 	 */
 	public void depositInterest(float depositInterest) throws MoneyException {
 
-		long amount = (long) ((this.getAccountBalance() / 100) * giroConditions.getCreditInterest());
-		this.manageMoney("HabeZins", amount, '+', this.kBalance.getCurrency());
+		long amount = (long) ((this.getAccountBalance() / 100) * giroConditions
+				.getCreditInterest());
+		this.manageMoney("creditInterest", amount, '+', this.kBalance.getCurrency());
 	}
 
 	/**
@@ -43,14 +48,18 @@ public class GiroAccount extends Account {
 	 */
 	@Override
 	public void payInterest() throws MoneyException {
+		if (TimeEmitter.getTimeEmitter().getCalender().get(Calendar.DAY_OF_MONTH) == 1) {
+			long amount = (long) (((this.getAccountBalance() / 100) * giroConditions
+					.getDebitInterest()) * -1);
 
-		long amount = (long) (((this.getAccountBalance() / 100) * giroConditions.getDebitInterest()) * -1);
-
-		this.manageMoney("SollZins", amount, '-', this.kBalance.getCurrency());
+			this.manageMoney("debitInterest", amount, '-', this.kBalance
+					.getCurrency());
+		}
 	}
 
 	/**
 	 * manageMoney()
+	 * 
 	 * @param
 	 */
 	@Override

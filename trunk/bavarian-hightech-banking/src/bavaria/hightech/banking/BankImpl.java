@@ -7,7 +7,7 @@ import bavaria.hightech.exceptions.TypException;
 /**
  * 
  * class to manage bank
- *
+ * 
  */
 public class BankImpl implements BankCustomerView, BankAdmin {
 
@@ -27,6 +27,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * createAcc()
+	 * 
 	 * @param
 	 */
 	@Override
@@ -46,6 +47,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * addMoney()
+	 * 
 	 * @param
 	 */
 	@Override
@@ -61,6 +63,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * requestMoney()
+	 * 
 	 * @param
 	 */
 	@Override
@@ -76,6 +79,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * transferMoney()
+	 * 
 	 * @param
 	 */
 	@Override
@@ -83,8 +87,8 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 			Currency currencyFROM, Currency currencyTO) {
 
 		try {
-			calculateIndex(kNummerFROM).manageMoney("bank transfer", amount, '-',
-					currencyFROM);
+			calculateIndex(kNummerFROM).manageMoney("bank transfer", amount,
+					'-', currencyFROM);
 		} catch (MoneyException e) {
 			e.printStackTrace();
 		}
@@ -99,6 +103,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * showMoney()
+	 * 
 	 * @param
 	 */
 	@Override
@@ -110,6 +115,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * chargeInterest()
+	 * 
 	 * @throws MoneyException
 	 */
 	public void chargeInterest() throws MoneyException {
@@ -134,6 +140,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * accountsCurrent()
+	 * 
 	 * @param kontoNummer
 	 * @return
 	 */
@@ -143,6 +150,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * calculateIndex()
+	 * 
 	 * @param kontoNummer
 	 * @return
 	 */
@@ -152,6 +160,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 	/**
 	 * calculateIndex()
+	 * 
 	 * @param kontoNummer
 	 * @param obj
 	 */
@@ -160,8 +169,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	}
 
 	/**
-	 * defaultConditions()
-	 * -create default Conditions
+	 * defaultConditions() -create default Conditions
 	 */
 	private void defaultConditions() {
 
@@ -196,8 +204,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	}
 
 	/**
-	 * addCondition()
-	 * -add conditions for deposit accounts
+	 * addCondition() -add conditions for deposit accounts
 	 */
 	public void addCondition(DepositConditions fk) {
 
@@ -215,8 +222,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	}
 
 	/**
-	 * addCondition()
-	 * -add condition for giro accounts
+	 * addCondition() -add condition for giro accounts
 	 */
 	public void addCondition(GiroConditions gk) {
 

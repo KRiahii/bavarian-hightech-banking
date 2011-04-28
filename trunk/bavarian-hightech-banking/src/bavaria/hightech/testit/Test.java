@@ -3,6 +3,7 @@ package bavaria.hightech.testit;
 import bavaria.hightech.banking.*;
 import bavaria.hightech.exceptions.TypException;
 import bavaria.hightech.exceptions.MoneyException;
+import bavaria.hightech.time.TimeEmitter;
 
 /**
  * 
@@ -11,10 +12,10 @@ import bavaria.hightech.exceptions.MoneyException;
  */
 
 public class Test {
+	
+	public static BankImpl bank = new BankImpl();
 
 	public static void main(String[] args) throws MoneyException, TypException {
-
-		BankImpl bank = new BankImpl();
 
 		bank.createAcc("DepositAccount", "A", 1);
 		bank.createAcc("DepositAccount", "B", 0);
@@ -59,5 +60,12 @@ public class Test {
 		System.out.println();
 		System.out.println("--------------------------");
 		bank.showDepositConditions();
+		TimeEmitter.getTimeEmitter().elapstime(5);
+		bank.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
+		System.out.println(bank.accountsCurrent(2002));
+		
+		bank.requestMoney(5000, 2004, Money.Currency.EURO);
+		TimeEmitter.getTimeEmitter().elapstime(75);
+		System.out.println(bank.accountsCurrent(2004));
 	}
 }
