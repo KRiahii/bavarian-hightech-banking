@@ -38,6 +38,9 @@ public class GiroAccount extends Account {
 		this.manageMoney("HabeZins", amount, '+', this.kBalance.getCurrency());
 	}
 
+	/**
+	 * payInterest()
+	 */
 	@Override
 	public void payInterest() throws MoneyException {
 
@@ -46,6 +49,10 @@ public class GiroAccount extends Account {
 		this.manageMoney("SollZins", amount, '-', this.kBalance.getCurrency());
 	}
 
+	/**
+	 * manageMoney()
+	 * @param
+	 */
 	@Override
 	public void manageMoney(String reason, long amount, char sign,
 			Currency currency) throws MoneyException {
@@ -63,6 +70,9 @@ public class GiroAccount extends Account {
 		super.update(reason, amount, sign, currency);
 	}
 
+	/**
+	 * printTyp()
+	 */
 	@Override
 	public void printTyp() {
 		System.out.println("GiroKonto:");

@@ -1,5 +1,10 @@
 package bavaria.hightech.banking;
 
+/**
+ * 
+ * class to manage currency
+ *
+ */
 public class Money {
 	private long value;
 	private Currency currency;
@@ -9,14 +14,26 @@ public class Money {
 		this.setCurrency(currency);
 	}
 
+	/**
+	 * setValue()
+	 * @param value
+	 */
 	public void setValue(long value) {
 		this.value = value;
 	}
 
+	/**
+	 * getValue()
+	 * @return
+	 */
 	public long getValue() {
 		return value;
 	}
 
+	/**
+	 * setCurrency()
+	 * @param currency
+	 */
 	public void setCurrency(Currency currency) {
 		switch (currency) {
 		case EURO:
@@ -37,6 +54,10 @@ public class Money {
 		}
 	}
 
+	/**
+	 * getCurrency()
+	 * @return
+	 */
 	public Currency getCurrency() {
 		return currency;
 	}
@@ -47,10 +68,18 @@ public class Money {
 
 		private double factor;
 
+		/**
+		 * setFactor()
+		 * @param factor
+		 */
 		public void setFactor(double factor) {
 			this.factor = factor;
 		}
 
+		/**
+		 * getFactor()
+		 * @return
+		 */
 		public double getFactor() {
 			return factor;
 		}
@@ -60,6 +89,11 @@ public class Money {
 		}
 	}
 
+	/**
+	 * addMoney()
+	 * @param value
+	 * @param currency
+	 */
 	public void addMoney(long value, Currency currency) {
 		switch (currency) {
 		case EURO:
@@ -90,6 +124,11 @@ public class Money {
 		}
 	}
 
+	/**
+	 * subMoney()
+	 * @param value
+	 * @param currency
+	 */
 	public void subMoney(long value, Currency currency) {
 		switch (currency) {
 		case EURO:
@@ -120,6 +159,11 @@ public class Money {
 		}
 	}
 
+	/**
+	 * equalMoney()
+	 * @param value
+	 * @return
+	 */
 	public boolean equalMoney(long value) {
 		if (this.value == value) {
 			return true;
@@ -128,6 +172,11 @@ public class Money {
 		}
 	}
 
+	/**
+	 * isBigger()
+	 * @param value
+	 * @return
+	 */
 	public boolean isBigger(long value) {
 		if (this.value > value) {
 			return true;
@@ -136,6 +185,11 @@ public class Money {
 		}
 	}
 
+	/**
+	 * isSmaler()
+	 * @param value
+	 * @return
+	 */
 	public boolean isSmaler(long value) {
 		if (this.value < value) {
 			return true;
@@ -144,6 +198,10 @@ public class Money {
 		}
 	}
 
+	/**
+	 * changeCurrency()
+	 * @param currency
+	 */
 	public void changeCurrency(Currency currency) {
 		value = (long) ((value * this.currency.getFactor()) / currency
 				.getFactor());

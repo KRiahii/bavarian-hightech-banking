@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import bavaria.hightech.banking.Money.Currency;
 
+/**
+ *
+ * class to manage the booking
+ *
+ */
 public class BookingList {
 
 	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
@@ -12,11 +17,22 @@ public class BookingList {
 	
 	ArrayList<Accounting> accounting = new ArrayList<Accounting>();
 	
+	/**
+	 * add()
+	 * @param reason
+	 * @param amount
+	 * @param sign
+	 * @param currency
+	 */
 	public void add(String reason, String amount, char sign, Currency currency){
 		
 		this.accounting.add( new Accounting(reason,amount,sign,currency) );
 	}
 	
+	/**
+	 * clear()
+	 * -empty the booking list
+	 */
 	public void clear(){
 		
 		this.accounting = new ArrayList<Accounting>();

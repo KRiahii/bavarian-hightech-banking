@@ -4,6 +4,11 @@ import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
 
+/**
+ * 
+ * class to manage bank
+ *
+ */
 public class BankImpl implements BankCustomerView, BankAdmin {
 
 	private Account[] accounts;
@@ -20,6 +25,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		defaultConditions();
 	}
 
+	/**
+	 * createAcc()
+	 * @param
+	 */
 	@Override
 	public void createAcc(String typ, String kHolder, int key) {
 
@@ -35,6 +44,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 			throw new TypException("invalid typ");
 	}
 
+	/**
+	 * addMoney()
+	 * @param
+	 */
 	@Override
 	public void addMoney(long amount, int kNumber, Currency currency) {
 
@@ -46,6 +59,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		}
 	}
 
+	/**
+	 * requestMoney()
+	 * @param
+	 */
 	@Override
 	public void requestMoney(long amount, int kNumber, Currency currency) {
 
@@ -57,6 +74,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		}
 	}
 
+	/**
+	 * transferMoney()
+	 * @param
+	 */
 	@Override
 	public void transferMoney(long amount, int kNummerFROM, int kNummerTO,
 			Currency currencyFROM, Currency currencyTO) {
@@ -76,6 +97,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		}
 	}
 
+	/**
+	 * showMoney()
+	 * @param
+	 */
 	@Override
 	public void showMoney(int kNumber) {
 
@@ -83,6 +108,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 				+ " Account: " + calculateIndex(kNumber).getKnumber());
 	}
 
+	/**
+	 * chargeInterest()
+	 * @throws MoneyException
+	 */
 	public void chargeInterest() throws MoneyException {
 
 		for (int i = 0; i < accounts.length; i++)
@@ -90,6 +119,9 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 				accounts[i].payInterest();
 	}
 
+	/**
+	 * list()
+	 */
 	public void list() {
 
 		for (int i = 0; i < accounts.length; i++)
@@ -100,18 +132,37 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 				return;
 	}
 
+	/**
+	 * accountsCurrent()
+	 * @param kontoNummer
+	 * @return
+	 */
 	public String accountsCurrent(int kontoNummer) {
 		return calculateIndex(kontoNummer).toString();
 	}
 
+	/**
+	 * calculateIndex()
+	 * @param kontoNummer
+	 * @return
+	 */
 	private Account calculateIndex(int kontoNummer) {
 		return accounts[kontoNummer - 2000];
 	}
 
+	/**
+	 * calculateIndex()
+	 * @param kontoNummer
+	 * @param obj
+	 */
 	private void calculateIndex(int kontoNummer, Account obj) {
 		accounts[kontoNummer - 2000] = obj;
 	}
 
+	/**
+	 * defaultConditions()
+	 * -create default Conditions
+	 */
 	private void defaultConditions() {
 
 		this.giro = new GiroConditions[3];
@@ -126,18 +177,28 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		deposit[2] = new DepositConditions(3.34f, 12);
 	}
 
+	/**
+	 * showDepsitConditions()
+	 */
 	public void showDepositConditions() {
 
 		for (int i = 0; i < this.deposit.length; i++)
 			System.out.println(deposit[i].toString());
 	}
 
+	/**
+	 * showGiroConditions()
+	 */
 	public void showGiroConditions() {
 
 		for (int i = 0; i < this.giro.length; i++)
 			System.out.println(giro[i].toString());
 	}
 
+	/**
+	 * addCondition()
+	 * -add conditions for deposit accounts
+	 */
 	public void addCondition(DepositConditions fk) {
 
 		DepositConditions[] buffer = new DepositConditions[this.deposit.length];
@@ -153,6 +214,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		this.deposit[buffer.length] = fk;
 	}
 
+	/**
+	 * addCondition()
+	 * -add condition for giro accounts
+	 */
 	public void addCondition(GiroConditions gk) {
 
 		GiroConditions[] buffer = new GiroConditions[this.giro.length];
@@ -168,6 +233,9 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 		this.giro[buffer.length] = gk;
 	}
 
+	/**
+	 * changeInterest()
+	 */
 	@Override
 	public void changeInterest(float debitInterest, float creditInterest) {
 

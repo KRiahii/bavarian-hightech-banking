@@ -1,5 +1,10 @@
 package bavaria.hightech.exceptions;
 
+/**
+ * 
+ * throws TypExceptions
+ *
+ */
 @SuppressWarnings("serial")
 public class TypException extends RuntimeException {
 

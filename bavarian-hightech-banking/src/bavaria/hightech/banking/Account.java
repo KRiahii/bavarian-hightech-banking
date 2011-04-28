@@ -53,7 +53,6 @@ public abstract class Account {
 		return kBalance.getValue();
 	}
 
-	@SuppressWarnings("static-access")
 	public Calendar getCreationDate() {
 		return createDate.getCalender();
 	}

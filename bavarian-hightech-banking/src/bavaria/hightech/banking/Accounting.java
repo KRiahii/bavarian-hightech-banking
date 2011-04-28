@@ -22,23 +22,42 @@ public class Accounting {
 		accountingDate = TimeEmitter.getTimeEmitter();
 	}
 
+	/**
+	 * getReason()
+	 * @return
+	 */
 	public String getReason() {
 		return this.reason;
 	}
 
+	/**
+	 * getAmount()
+	 * @return
+	 */
 	public String getAmount() {
 		return this.amount;
 	}
 
+	/**
+	 * getSign()
+	 * @return
+	 */
 	public char getSign() {
 		return this.sign;
 	}
 
+	/**
+	 * getCurrency()
+	 * @return
+	 */
 	public Currency getCurrency() {
 		return this.currency;
 	}
 
-	@SuppressWarnings("static-access")
+	/**
+	 * getAccountingDate()
+	 * @return
+	 */
 	public Calendar getAccountingDate() {
 		return accountingDate.getCalender();
 	}

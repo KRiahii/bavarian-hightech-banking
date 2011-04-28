@@ -1,5 +1,10 @@
 package bavaria.hightech.banking;
 
+/**
+ * 
+ * contains all giro conditions
+ *
+ */
 public class GiroConditions {
 
 	private int overpullingFrame;
@@ -14,16 +19,28 @@ public class GiroConditions {
 		this.creditInterest = 2.34f;
 	}
 
+	/**
+	 * setInterest()
+	 * @param debitInterest
+	 * @param creditInterest
+	 */
 	public void setInterest(float debitInterest, float creditInterest) {
 
 		this.debitInterest = debitInterest;
 		this.creditInterest = creditInterest;
 	}
 
+	/**
+	 * getOverpullingFrame()
+	 * @return
+	 */
 	public int getOverpullingFrame() {
 		return this.overpullingFrame;
 	}
 
+	/**
+	 * toString()
+	 */
 	@Override
 	public String toString() {
 
@@ -33,10 +50,18 @@ public class GiroConditions {
 		return sb.toString();
 	}
 
+	/**
+	 * getDebitInterest()
+	 * @return
+	 */
 	public float getDebitInterest() {
 		return this.debitInterest;
 	}
 
+	/**
+	 * getCreditInterest()
+	 * @return
+	 */
 	public float getCreditInterest() {
 		return this.creditInterest;
 	}
