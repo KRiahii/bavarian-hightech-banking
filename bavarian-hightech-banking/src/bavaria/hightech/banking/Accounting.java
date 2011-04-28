@@ -10,24 +10,16 @@ public class Accounting {
 	private String reason;
 	private String amount;
 	private char sign;
-	private Accounting next;
 	private Currency currency;
 	private TimeEmitter accountingDate;
 
-	Accounting(String reason, String amount, char sign, Accounting next,
+	Accounting(String reason, String amount, char sign,
 			Currency currency) {
 		this.reason = reason;
 		this.amount = amount;
-		this.next = next;
 		this.sign = sign;
 		this.currency = currency;
 		accountingDate = TimeEmitter.getTimeEmitter();
-	}
-
-	public void creatNext(String reason, String amount, char sign,
-			Accounting next, Currency currency) {
-
-		this.next = new Accounting(reason, amount, sign, next, currency);
 	}
 
 	public String getReason() {
@@ -40,10 +32,6 @@ public class Accounting {
 
 	public char getSign() {
 		return this.sign;
-	}
-
-	public Accounting getNext() {
-		return this.next;
 	}
 
 	public Currency getCurrency() {
