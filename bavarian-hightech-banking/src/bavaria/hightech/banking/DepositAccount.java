@@ -12,8 +12,6 @@ import bavaria.hightech.exceptions.MoneyException;
 
 public class DepositAccount extends Account {
 
-	private DepositConditions depositConditions;
-
 	/**
 	 * DepositAccount()
 	 * 
@@ -29,7 +27,7 @@ public class DepositAccount extends Account {
 	@Override
 	public void payInterest() throws MoneyException {
 
-		long amount = (long) ((this.getAccountBalance() / 100) * depositConditions.getInterest());
+		long amount = (long) ((this.getAccountBalance() / 100) * 2.34);
 		this.manageMoney("interest", amount, '+', this.kBalance.getCurrency());
 	}
 

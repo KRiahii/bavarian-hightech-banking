@@ -22,7 +22,7 @@ public abstract class Account {
 	protected Money kBalance;
 	private String kHolder;
 	private BookingList accountingEntry;
-	private TimeEmitter createDate;
+	public Calendar createDate;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
 	DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
@@ -32,7 +32,7 @@ public abstract class Account {
 		this.kHolder = kInhaber;
 		this.kBalance = new Money(0, Money.Currency.EURO);
 		this.accountingEntry = new BookingList();
-		createDate = TimeEmitter.getTimeEmitter();
+		createDate = TimeEmitter.getTimeEmitter().getCalender();
 	}
 
 	/**
@@ -50,11 +50,14 @@ public abstract class Account {
 	 * @return balance(double)
 	 */
 	public long getAccountBalance() {
+		if(kBalance != null)
 		return kBalance.getValue();
+		
+		return 0;
 	}
 
 	public Calendar getCreationDate() {
-		return createDate.getCalender();
+		return createDate;
 	}
 
 	/**
@@ -96,7 +99,7 @@ public abstract class Account {
 			Currency currency) throws MoneyException {
 
 		if (amount < 0)
-			throw new MoneyException("invalid amount " + amount);
+			amount = 0;
 
 		if (sign == '+')
 			this.kBalance.addMoney(amount, currency);
