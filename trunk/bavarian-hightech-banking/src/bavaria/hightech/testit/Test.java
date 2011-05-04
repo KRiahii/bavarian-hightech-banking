@@ -3,7 +3,6 @@ package bavaria.hightech.testit;
 import bavaria.hightech.banking.*;
 import bavaria.hightech.exceptions.TypException;
 import bavaria.hightech.exceptions.MoneyException;
-import bavaria.hightech.time.TimeEmitter;
 
 /**
  * 
@@ -60,12 +59,13 @@ public class Test {
 		System.out.println();
 		System.out.println("--------------------------");
 		bank.showDepositConditions();
-		TimeEmitter.getTimeEmitter().elapstime(5);
+		bank.run(5);
 		bank.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
 		System.out.println(bank.accountsCurrent(2002));
 		
 		bank.requestMoney(5000, 2004, Money.Currency.EURO);
-		TimeEmitter.getTimeEmitter().elapstime(75);
+		//bank.elapsTime(75);
 		System.out.println(bank.accountsCurrent(2004));
+		System.out.println(bank.accountsCurrent(2000));
 	}
 }
