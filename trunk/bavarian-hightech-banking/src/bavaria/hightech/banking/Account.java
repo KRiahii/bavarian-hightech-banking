@@ -109,7 +109,7 @@ public abstract class Account {
 
 		NumberFormat n = NumberFormat.getInstance();
 		n.setMaximumFractionDigits(2);
-		accountingEntry.add(reason, n.format(amount), sign, currency);
+		accountingEntry.insert(reason, n.format(amount), sign, currency);
 	}
 
 	@Override
