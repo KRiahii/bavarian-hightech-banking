@@ -1,56 +1,71 @@
 package bavaria.hightech.banking;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 
 import bavaria.hightech.banking.Money.Currency;
 
 /**
- *
+ * 
  * class to manage the booking
- *
+ * 
  */
 public class BookingList {
 
 	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
-	
-	ArrayList<Accounting> accounting = new ArrayList<Accounting>();
-	
+
+	LinkElement<Accounting> h = new LinkElement<Accounting>(null, null);
+
 	/**
-	 * add()
+	 * insert()
+	 * 
 	 * @param reason
 	 * @param amount
 	 * @param sign
 	 * @param currency
 	 */
-	public void add(String reason, String amount, char sign, Currency currency){
-		
-		this.accounting.add( new Accounting(reason,amount,sign,currency) );
+
+	public void insert(String reason, String amount, char sign,
+			Currency currency) {
+		h.next = new LinkElement<Accounting>(new Accounting(reason, amount,
+				sign, currency), h.next);
 	}
-	
+
 	/**
-	 * clear()
-	 * -empty the booking list
+	 * clear() -empty the booking list
 	 */
-	public void clear(){
-		
-		this.accounting = new ArrayList<Accounting>();
+	public void clear() {
+
+		this.h = new LinkElement<Accounting>(null, null);
 	}
-	
+
 	@Override
 	public String toString() {
-		
+
 		StringBuffer sb = new StringBuffer();
-		
-		for(Accounting lnk : this.accounting){
-			sb.append("> " + lnk.getReason() + ": " + lnk.getSign()
-					+ lnk.getAmount() + " " + lnk.getCurrency() + " "
-					+ df.format(lnk.getAccountingDate().getTime()) + " "
-					+ tf.format(lnk.getAccountingDate().getTime()));
-			sb.append('\n');			
+
+		LinkElement<Accounting> le = h.next;
+		while (le.next != null) {
+			Accounting acc = le.element;
+			sb.append("> " + acc.getReason() + ": " + acc.getSign()
+					+ acc.getAmount() + " " + acc.getCurrency() + " "
+					+ df.format(acc.getAccountingDate().getTime()) + " "
+					+ tf.format(acc.getAccountingDate().getTime()));
+			sb.append('\n');
+
+			le = le.next;
 		}
-		
+
 		return sb.toString();
+	}
+
+	class LinkElement<E> {
+		E element;
+		LinkElement<E> next;
+
+		LinkElement(E element, LinkElement<E> next) {
+			this.element = element;
+			this.next = next;
+		}
 	}
 }

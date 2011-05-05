@@ -11,6 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
+/**
+ * 
+ * creating clock display
+ * 
+ */
 public class Clock extends JFrame {
 	private static final int TICK_PERIOD = 1;
 	private Timer ticker;
@@ -45,11 +50,17 @@ public class Clock extends JFrame {
 
 	}
 
+	/**
+	 * start
+	 */
 	public void start() {
 		ticker = new Timer(true);
 		ticker.scheduleAtFixedRate(new TickerTask(), 0, TICK_PERIOD);
 	}
-	
+
+	/**
+	 * stop
+	 */
 	public void stop() {
 		ticker.cancel();
 		setVisible(false);

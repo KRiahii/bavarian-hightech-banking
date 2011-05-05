@@ -3,15 +3,13 @@ package bavaria.hightech.banking;
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
-import bavaria.hightech.time.TimeEmitter;
-import java.util.Calendar;
 
 /**
  * 
  * class to manage bank
  * 
  */
-public class BankImpl extends Thread implements BankCustomerView, BankAdmin{
+public class BankImpl implements BankCustomerView, BankAdmin {
 
 	private Account[] accounts;
 	private int count;
@@ -19,9 +17,6 @@ public class BankImpl extends Thread implements BankCustomerView, BankAdmin{
 	private GiroConditions[] giro;
 	private DepositConditions[] deposit;
 
-	private TimeEmitter timeEmitter;
-	private Calendar revCalendar;
-	
 	public BankImpl() {
 
 		this.accounts = new Account[20];
@@ -128,26 +123,6 @@ public class BankImpl extends Thread implements BankCustomerView, BankAdmin{
 		for (int i = 0; i < accounts.length; i++)
 			if (accounts[i] != null)
 				accounts[i].payInterest();
-	}
-	
-	/**
-	 * elapsTime()
-	 * @throws MoneyException 
-	 * 
-	 */
-	public void run(int time) throws MoneyException {
-		timeEmitter = TimeEmitter.getTimeEmitter();
-		revCalendar = timeEmitter.getCalender();
-		timeEmitter.elapsTime(time);
-		
-		for (int i = time; time >= 0; i--) {
-			
-			revCalendar.add(Calendar.DATE, 1);
-			while (timeEmitter.getCalender().before(revCalendar)){
-				System.out.println("lol");
-			}
-			chargeInterest();
-		}
 	}
 
 	/**
