@@ -37,7 +37,7 @@ public class Test {
 		bank.showMoney(2000);
 		bank.showMoney(2001);
 
-		bank.list();
+		//bank.list();
 
 		System.out.println("--------------------------");
 		System.out.println(bank.accountsCurrent(2001));
@@ -67,12 +67,5 @@ public class Test {
 		bank.requestMoney(5000, 2004, Money.Currency.EURO);
 		TimeEmitter.getTimeEmitter().elapstime(25);
 		System.out.println(bank.accountsCurrent(2004));
-		System.out.println(bank.accountsCurrent(2000));
-		TimeEmitter.getTimeEmitter().elapstime(5);
-		TimeEmitter.getTimeEmitter().elapstime(5);
-		TimeEmitter.getTimeEmitter().elapstime(5);
-		TimeEmitter.getTimeEmitter().elapstime(5);
-		System.out.println(bank.accountsCurrent(2000));
-
 	}
 }

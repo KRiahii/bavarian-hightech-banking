@@ -21,7 +21,7 @@ public abstract class Account {
 	private int kNumber;
 	protected Money kBalance;
 	private String kHolder;
-	private BookingList accountingEntry;
+	private Booking accountingEntry;
 	public Calendar createDate;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
 	DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
@@ -31,7 +31,7 @@ public abstract class Account {
 		this.kNumber = kNummer;
 		this.kHolder = kInhaber;
 		this.kBalance = new Money(0, Money.Currency.EURO);
-		this.accountingEntry = new BookingList();
+		this.accountingEntry = new Booking();
 		createDate = TimeEmitter.getTimeEmitter().getCalender();
 	}
 
