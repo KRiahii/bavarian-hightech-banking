@@ -2,104 +2,76 @@ package GenList;
 
 public class GenList<E> {
 
-	private LinkElement<E> head;
-	private LinkedListIterator itr;
-	
-    /**
-     * Construct the list
-     */
-	public GenList(){
-		this.head = new LinkElement<E>(null, null);
-		zero();
+	private LinkElement<E> header;
+
+	/**
+	 * Construct the list
+	 */
+	public GenList() {
+		header = new LinkElement<E>(null, null);
 	}
-	
-    /**
-     * @return true if empty
-     */
-    public boolean isEmpty( ) {
-        return head.next == null;
-    }
-    
-    /**
-     * Make the list empty.
-     */
-    public void makeEmpty( ) {
-        head.next = null;
-    }
-    
-    /**
-     * @return the current element
-     */
-    public E getElement(){
-    	return itr.retrieve();
-    }
-    
-    /**
-     * Return an iterator representing the header node.
-     */
-    public void zero( ) {
-        itr =  new LinkedListIterator( head );
-    }
-    
-    /**
-     * Insert after E.
-     */
-    public void insert( E element ) {
-        if( itr != null && itr.current != null )
-            itr.current.next = new LinkElement<E>( element, itr.current.next );
-    }
-    
-    /**
-     * Set Iterator to next element.
-     * @return true if the next element is valid
-     */
-    public boolean next(){
-    	itr.advance();
-    	
-    	return itr.isValid();
-    }
 
-    private class LinkedListIterator {
-    	
-	    LinkElement<E> current;    // Current position
-
-	    LinkedListIterator( LinkElement<E> current ) {
-	        this.current = current;
-	    }
-	    
-	    /**
-	     * @return true if the current position is valid.
-	     */
-	    public boolean isValid( ) {
-	        return current != null;
-	    }
-	    
-	    /**
-	     * @return the stored item or null.
-	     */
-	    public E retrieve( ) {
-	        return isValid( ) ? current.element : null;
-	    }
-	    
-	    /**
-	     * Advance the current position to the next node in the list.
-	     */
-	    public void advance( ) {
-	        if( isValid( ) )
-	            current = current.next;
-	    }
+	/**
+	 * @return true if empty, false otherwise.
+	 */
+	public boolean isEmpty() {
+		return header.next == null;
 	}
-	
-    /**
-     * Element holder class.
-     */
-	private static class LinkElement<E> {
-		E element;
-		LinkElement<E> next;
 
-		LinkElement(E element, LinkElement<E> next) {
-			this.element = element;
-			this.next = next;
+	/**
+	 * Make the list empty.
+	 */
+	public void makeEmpty() {
+		header.next = null;
+	}
+
+	/**
+	 * @return an iterator representing the header node.
+	 */
+	public LinkedListIterator<E> zeroth() {
+		return new LinkedListIterator<E>(header);
+	}
+
+	/**
+	 * @return an iterator representing the first node in the list.
+	 */
+	public LinkedListIterator<E> first() {
+		return new LinkedListIterator<E>(header.next);
+	}
+
+	/**
+	 * Insert after p.
+	 */
+	public void insert(E x, LinkedListIterator<E> p) {
+		if (p != null && p.current != null)
+			p.current.next = new LinkElement<E>(x, p.current.next);
+	}
+
+	/**
+	 * Prints out the list.
+	 */
+	public void printList(GenList<?> theList) {
+		if (theList.isEmpty())
+			System.out.print("Empty list");
+		else {
+			LinkedListIterator<?> itr = theList.first();
+			for (; itr.isValid(); itr.advance())
+				System.out.print(itr.retrieve() + " ");
 		}
+
+		System.out.println();
+	}
+}
+
+/**
+ * Element holder class.
+ */
+class LinkElement<E> {
+	E element;
+	LinkElement<E> next;
+
+	LinkElement(E element, LinkElement<E> next) {
+		this.element = element;
+		this.next = next;
 	}
 }

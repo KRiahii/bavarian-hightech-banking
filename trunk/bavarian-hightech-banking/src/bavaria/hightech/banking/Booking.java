@@ -1,7 +1,7 @@
 package bavaria.hightech.banking;
 
 import java.text.DateFormat;
-import GenList.GenList;
+import GenList.*;
 
 import bavaria.hightech.banking.Money.Currency;
 
@@ -15,7 +15,8 @@ public class Booking {
 	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
 
-	GenList<Accounting> h = new GenList<Accounting>();
+	GenList<Accounting> list = new GenList<Accounting>();
+	LinkedListIterator<Accounting> itr = list.zeroth();
 
 	/**
 	 * insert()
@@ -28,7 +29,7 @@ public class Booking {
 
 	public void insert(String reason, String amount, char sign,
 			Currency currency) {
-		h.insert(new Accounting(reason, amount, sign, currency));
+		list.insert(new Accounting(reason, amount, sign, currency), itr);
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class Booking {
 	 */
 	public void clear() {
 
-		h = new GenList<Accounting>();
+		list = new GenList<Accounting>();
 	}
 
 	@Override
@@ -44,16 +45,15 @@ public class Booking {
 		
 		StringBuilder sb = new StringBuilder();
 
-		GenList<Accounting> buffer = h;
-		buffer.zero();
+		LinkedListIterator<Accounting> itrBuffer = list.first();
 		
-		while(buffer.next()){
-			sb.append(buffer.getElement().getReason() + ": ");
-			sb.append(buffer.getElement().getSign());
-			sb.append(buffer.getElement().getAmount() + " ");
-			sb.append(buffer.getElement().getCurrency() + "\n");
-			sb.append("Time: " + df.format(buffer.getElement().getAccountingDate().getTime()) + " ");
-			sb.append(tf.format(buffer.getElement().getAccountingDate().getTime()));
+		for (; itr.isValid(); itr.advance()){
+			sb.append(((Accounting) itrBuffer.retrieve()).getReason() + ": ");
+			sb.append(((Accounting) itrBuffer.retrieve()).getSign());
+			sb.append(((Accounting) itrBuffer.retrieve()).getAmount() + " ");
+			sb.append(((Accounting) itrBuffer.retrieve()).getCurrency() + "\n");
+			sb.append("Time: " + df.format(((Accounting) itrBuffer.retrieve()).getAccountingDate().getTime()) + " ");
+			sb.append(tf.format(((Accounting) itrBuffer.retrieve()).getAccountingDate().getTime()));
 			
 			sb.append("\n");
 		}
