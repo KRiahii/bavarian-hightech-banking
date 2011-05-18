@@ -144,6 +144,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	 * @param kontoNummer
 	 * @return
 	 */
+	@Override
 	public String accountsCurrent(int kontoNummer) {
 		return calculateIndex(kontoNummer).toString();
 	}
@@ -188,6 +189,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	/**
 	 * showDepsitConditions()
 	 */
+	@Override
 	public void showDepositConditions() {
 
 		for (int i = 0; i < this.deposit.length; i++)

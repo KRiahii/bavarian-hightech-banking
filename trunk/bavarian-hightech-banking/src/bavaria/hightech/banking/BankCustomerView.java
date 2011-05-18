@@ -13,5 +13,5 @@ public interface BankCustomerView {
 	void requestMoney(long amount, int kNumber, Currency currency);
 
 	void transferMoney(long amount, int kNumberFrom, int kNumberTo,
-			Currency currencyFrom, Currency currenyTo);
+			Currency currencyFrom, Currency currencyTo);
 }
