@@ -7,4 +7,8 @@ public interface BankAdmin {
 	void addCondition(GiroConditions gk);
 
 	void changeInterest(float sollzins, float habezins);
+	
+	String accountsCurrent(int kontoNummer);
+
+	void showDepositConditions();
 }
