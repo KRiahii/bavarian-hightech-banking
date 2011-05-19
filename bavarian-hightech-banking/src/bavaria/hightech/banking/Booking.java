@@ -16,7 +16,7 @@ public class Booking {
 	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
 
 	GenList<Accounting> list = new GenList<Accounting>();
-	LinkedListIterator<Accounting> itr = list.zeroth();
+	LinkedListIterator<Accounting> itr = list.inception();
 
 	/**
 	 * insert()
@@ -29,7 +29,7 @@ public class Booking {
 
 	public void insert(String reason, String amount, char sign,
 			Currency currency) {
-		list.insert(new Accounting(reason, amount, sign, currency), itr);
+		list.insert(new Accounting(reason, amount, sign, currency), this.itr);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class Booking {
 
 		LinkedListIterator<Accounting> itrBuffer = list.first();
 		
-		for (; itr.isValid(); itr.advance()){
+		for (; itrBuffer.isValid(); itrBuffer.advance()){
 			sb.append(((Accounting) itrBuffer.retrieve()).getReason() + ": ");
 			sb.append(((Accounting) itrBuffer.retrieve()).getSign());
 			sb.append(((Accounting) itrBuffer.retrieve()).getAmount() + " ");
