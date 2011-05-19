@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import bavaria.hightech.banking.BankCustomerView;
+
+import bavaria.hightech.banking.Interface.BankCustomerView;
 import bavaria.hightech.banking.Money.Currency;
 
 public class BankViewProxy implements BankCustomerView {

@@ -1,4 +1,7 @@
-package bavaria.hightech.banking;
+package bavaria.hightech.banking.Interface;
+
+import bavaria.hightech.banking.DepositConditions;
+import bavaria.hightech.banking.GiroConditions;
 
 public interface BankAdmin {
 

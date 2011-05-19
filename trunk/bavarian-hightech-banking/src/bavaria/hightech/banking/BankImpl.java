@@ -5,7 +5,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Proxy.BankAdminProxy;
+import bavaria.hightech.banking.Interface.BankAdmin;
+import bavaria.hightech.banking.Interface.BankCustomerView;
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
