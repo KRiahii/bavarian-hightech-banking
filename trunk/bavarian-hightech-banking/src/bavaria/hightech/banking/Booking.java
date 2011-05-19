@@ -42,22 +42,25 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		
+
 		StringBuilder sb = new StringBuilder();
 
 		LinkedListIterator<Accounting> itrBuffer = list.first();
-		
-		for (; itrBuffer.isValid(); itrBuffer.advance()){
+
+		for (; itrBuffer.isValid(); itrBuffer.advance()) {
 			sb.append(((Accounting) itrBuffer.retrieve()).getReason() + ": ");
 			sb.append(((Accounting) itrBuffer.retrieve()).getSign());
 			sb.append(((Accounting) itrBuffer.retrieve()).getAmount() + " ");
 			sb.append(((Accounting) itrBuffer.retrieve()).getCurrency() + "\n");
-			sb.append("Time: " + df.format(((Accounting) itrBuffer.retrieve()).getAccountingDate().getTime()) + " ");
-			sb.append(tf.format(((Accounting) itrBuffer.retrieve()).getAccountingDate().getTime()));
-			
+			sb.append("Time: "
+					+ df.format(((Accounting) itrBuffer.retrieve())
+							.getAccountingDate().getTime()) + " ");
+			sb.append(tf.format(((Accounting) itrBuffer.retrieve())
+					.getAccountingDate().getTime()));
+
 			sb.append("\n");
 		}
-		
+
 		return sb.toString();
 	}
 }

@@ -13,8 +13,7 @@ public class Accounting {
 	private Currency currency;
 	private Calendar accountingDate;
 
-	Accounting(String reason, String amount, char sign,
-			Currency currency) {
+	Accounting(String reason, String amount, char sign, Currency currency) {
 		this.reason = reason;
 		this.amount = amount;
 		this.sign = sign;
@@ -24,6 +23,7 @@ public class Accounting {
 
 	/**
 	 * getReason()
+	 * 
 	 * @return
 	 */
 	public String getReason() {
@@ -32,6 +32,7 @@ public class Accounting {
 
 	/**
 	 * getAmount()
+	 * 
 	 * @return
 	 */
 	public String getAmount() {
@@ -40,6 +41,7 @@ public class Accounting {
 
 	/**
 	 * getSign()
+	 * 
 	 * @return
 	 */
 	public char getSign() {
@@ -48,6 +50,7 @@ public class Accounting {
 
 	/**
 	 * getCurrency()
+	 * 
 	 * @return
 	 */
 	public Currency getCurrency() {
@@ -56,6 +59,7 @@ public class Accounting {
 
 	/**
 	 * getAccountingDate()
+	 * 
 	 * @return
 	 */
 	public Calendar getAccountingDate() {

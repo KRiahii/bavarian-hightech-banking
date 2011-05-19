@@ -3,7 +3,7 @@ package bavaria.hightech.banking;
 /**
  * 
  * class to manage currency
- *
+ * 
  */
 public class Money {
 	private long value;
@@ -16,14 +16,16 @@ public class Money {
 
 	/**
 	 * setValue()
+	 * 
 	 * @param value
 	 */
 	public long setValue(long value) {
-		 return this.value = value;
+		return this.value = value;
 	}
 
 	/**
 	 * getValue()
+	 * 
 	 * @return
 	 */
 	public long getValue() {
@@ -32,6 +34,7 @@ public class Money {
 
 	/**
 	 * setCurrency()
+	 * 
 	 * @param currency
 	 */
 	public void setCurrency(Currency currency) {
@@ -56,6 +59,7 @@ public class Money {
 
 	/**
 	 * getCurrency()
+	 * 
 	 * @return
 	 */
 	public Currency getCurrency() {
@@ -70,6 +74,7 @@ public class Money {
 
 		/**
 		 * setFactor()
+		 * 
 		 * @param factor
 		 */
 		public void setFactor(double factor) {
@@ -78,6 +83,7 @@ public class Money {
 
 		/**
 		 * getFactor()
+		 * 
 		 * @return
 		 */
 		public double getFactor() {
@@ -91,6 +97,7 @@ public class Money {
 
 	/**
 	 * addMoney()
+	 * 
 	 * @param value
 	 * @param currency
 	 */
@@ -122,12 +129,13 @@ public class Money {
 					/ this.currency.getFactor());
 			break;
 		}
-		
+
 		return this.value;
 	}
 
 	/**
 	 * subMoney()
+	 * 
 	 * @param value
 	 * @param currency
 	 */
@@ -164,6 +172,7 @@ public class Money {
 
 	/**
 	 * equalMoney()
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -177,6 +186,7 @@ public class Money {
 
 	/**
 	 * isBigger()
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -190,6 +200,7 @@ public class Money {
 
 	/**
 	 * isSmaler()
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -203,6 +214,7 @@ public class Money {
 
 	/**
 	 * changeCurrency()
+	 * 
 	 * @param currency
 	 */
 	public void changeCurrency(Currency currency) {

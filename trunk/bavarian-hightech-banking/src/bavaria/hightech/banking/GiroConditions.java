@@ -3,7 +3,7 @@ package bavaria.hightech.banking;
 /**
  * 
  * contains all giro conditions
- *
+ * 
  */
 public class GiroConditions {
 
@@ -21,6 +21,7 @@ public class GiroConditions {
 
 	/**
 	 * setInterest()
+	 * 
 	 * @param debitInterest
 	 * @param creditInterest
 	 */
@@ -32,6 +33,7 @@ public class GiroConditions {
 
 	/**
 	 * getOverpullingFrame()
+	 * 
 	 * @return
 	 */
 	public int getOverpullingFrame() {
@@ -52,6 +54,7 @@ public class GiroConditions {
 
 	/**
 	 * getDebitInterest()
+	 * 
 	 * @return
 	 */
 	public float getDebitInterest() {
@@ -60,6 +63,7 @@ public class GiroConditions {
 
 	/**
 	 * getCreditInterest()
+	 * 
 	 * @return
 	 */
 	public float getCreditInterest() {

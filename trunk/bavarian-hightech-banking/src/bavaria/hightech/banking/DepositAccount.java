@@ -5,8 +5,7 @@ import bavaria.hightech.exceptions.MoneyException;
 
 /**
  * 
- * Deposit account with credit interest attributes
- *  		-no negative amount-
+ * Deposit account with credit interest attributes -no negative amount-
  * 
  */
 

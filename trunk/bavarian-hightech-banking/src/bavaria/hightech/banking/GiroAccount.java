@@ -40,7 +40,8 @@ public class GiroAccount extends Account {
 
 		long amount = (long) ((this.getAccountBalance() / 100) * giroConditions
 				.getCreditInterest());
-		this.manageMoney("creditInterest", amount, '+', this.kBalance.getCurrency());
+		this.manageMoney("creditInterest", amount, '+', this.kBalance
+				.getCurrency());
 	}
 
 	/**
@@ -48,7 +49,8 @@ public class GiroAccount extends Account {
 	 */
 	@Override
 	public void payInterest() throws MoneyException {
-		if (TimeEmitter.getTimeEmitter().getCalender().get(Calendar.DAY_OF_MONTH) == 1) {
+		if (TimeEmitter.getTimeEmitter().getCalender().get(
+				Calendar.DAY_OF_MONTH) == 1) {
 			long amount = (long) (((this.getAccountBalance() / 100) * giroConditions
 					.getDebitInterest()) * -1);
 
