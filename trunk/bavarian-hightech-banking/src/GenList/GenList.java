@@ -28,7 +28,7 @@ public class GenList<E> {
 	/**
 	 * @return an iterator representing the header node.
 	 */
-	public LinkedListIterator<E> zeroth() {
+	public LinkedListIterator<E> inception() {
 		return new LinkedListIterator<E>(header);
 	}
 

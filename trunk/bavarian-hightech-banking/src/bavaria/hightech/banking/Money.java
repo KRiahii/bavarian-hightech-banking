@@ -18,8 +18,8 @@ public class Money {
 	 * setValue()
 	 * @param value
 	 */
-	public void setValue(long value) {
-		this.value = value;
+	public long setValue(long value) {
+		 return this.value = value;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Money {
 	 * @param value
 	 * @param currency
 	 */
-	public void addMoney(long value, Currency currency) {
+	public long addMoney(long value, Currency currency) {
 		switch (currency) {
 		case EURO:
 			this.value = (long) (this.value + (value * Currency.EURO
@@ -122,6 +122,8 @@ public class Money {
 					/ this.currency.getFactor());
 			break;
 		}
+		
+		return this.value;
 	}
 
 	/**
@@ -129,7 +131,7 @@ public class Money {
 	 * @param value
 	 * @param currency
 	 */
-	public void subMoney(long value, Currency currency) {
+	public long subMoney(long value, Currency currency) {
 		switch (currency) {
 		case EURO:
 			this.value = (long) (this.value - (value * Currency.EURO
@@ -157,6 +159,7 @@ public class Money {
 					/ this.currency.getFactor());
 			break;
 		}
+		return this.value;
 	}
 
 	/**
