@@ -10,10 +10,8 @@ import bavaria.hightech.time.TimeEmitter;
 
 /**
  * 
- * foundation class Account with
- * attributes for account number,
- * account balance and account holder
- * and methods to manage the amount of money.
+ * foundation class Account with attributes for account number, account balance
+ * and account holder and methods to manage the amount of money.
  */
 
 public abstract class Account {
@@ -50,9 +48,9 @@ public abstract class Account {
 	 * @return balance(double)
 	 */
 	public long getAccountBalance() {
-		if(kBalance != null)
-		return kBalance.getValue();
-		
+		if (kBalance != null)
+			return kBalance.getValue();
+
 		return 0;
 	}
 
@@ -120,12 +118,14 @@ public abstract class Account {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"creation date: " + dateFormat.format(getCreationDate().getTime())
-						+ " " + timeFormat.format(getCreationDate().getTime())).append(
-				"\n");
+				"creation date: "
+						+ dateFormat.format(getCreationDate().getTime()) + " "
+						+ timeFormat.format(getCreationDate().getTime()))
+				.append("\n");
 		sb.append("Name: " + getHolder()).append("\n");
 		sb.append("Accountnumber: " + getKnumber()).append("\n");
-		sb.append("Credit account: " + n.format(getAccountBalance())).append("\n");
+		sb.append("Credit account: " + n.format(getAccountBalance())).append(
+				"\n");
 		sb.append("currency: " + this.kBalance.getCurrency());
 		sb.append("\n--------------------------------------\n");
 		sb.append(accountingEntry.toString());

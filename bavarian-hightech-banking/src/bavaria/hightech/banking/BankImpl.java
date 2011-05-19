@@ -1,5 +1,11 @@
 package bavaria.hightech.banking;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Proxy.BankAdminProxy;
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
@@ -17,12 +23,17 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	private GiroConditions[] giro;
 	private DepositConditions[] deposit;
 
-	public BankImpl() {
+	private static Logger logger = Logger.getLogger(BankImpl.class.getName());
+
+	public BankImpl() throws SecurityException, IOException {
 
 		this.accounts = new Account[20];
 		this.count = 0;
 
 		defaultConditions();
+
+		FileHandler handler = new FileHandler("BankImpl.log");
+		logger.addHandler(handler);
 	}
 
 	/**
@@ -41,8 +52,10 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 			calculateIndex(2000 + count, new DepositAccount(2000 + count++,
 					kHolder, deposit[key]));
 
-		else
+		else {
+			logger.log(Level.WARNING, "TypException invalid typ " + typ);
 			throw new TypException("invalid typ");
+		}
 	}
 
 	/**
@@ -57,7 +70,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 			calculateIndex(kNumber).manageMoney("deposited", amount, '+',
 					currency);
 		} catch (MoneyException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 	}
 
@@ -73,7 +86,7 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 			calculateIndex(kNumber).manageMoney("detached", amount, '-',
 					currency);
 		} catch (MoneyException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 	}
 
@@ -90,14 +103,14 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 			calculateIndex(kNummerFROM).manageMoney("bank transfer", amount,
 					'-', currencyFROM);
 		} catch (MoneyException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 
 		try {
 			calculateIndex(kNummerTO).manageMoney("deposit", amount, '+',
 					currencyTO);
 		} catch (MoneyException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 	}
 

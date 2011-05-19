@@ -3,7 +3,7 @@ package bavaria.hightech.banking;
 /**
  * 
  * contains all deposits
- *
+ * 
  */
 public class DepositConditions {
 
@@ -12,6 +12,7 @@ public class DepositConditions {
 
 	/**
 	 * getInterest()
+	 * 
 	 * @return
 	 */
 	public float getInterest() {
@@ -20,6 +21,7 @@ public class DepositConditions {
 
 	/**
 	 * DepsoitConditions()
+	 * 
 	 * @param interest
 	 * @param contractPeriod
 	 */

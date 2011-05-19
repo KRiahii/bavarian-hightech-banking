@@ -8,9 +8,6 @@ import bavaria.hightech.exceptions.TypException;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.time.TimeEmitter;
 
-
-
-
 /**
  * 
  * test class
@@ -19,13 +16,14 @@ import bavaria.hightech.time.TimeEmitter;
 
 public class Test {
 
-	public static BankImpl bank = new BankImpl();
+	public static BankImpl bank;
 
-	public static void main(String[] args) throws MoneyException, TypException, SecurityException, IOException {
-
+	public static void main(String[] args) throws MoneyException, TypException,
+			SecurityException, IOException {
+		bank = new BankImpl();
 		BankCustomerView bV = new BankViewProxy(bank);
 		BankAdmin bA = new BankAdminProxy(bank);
-		
+
 		bV.createAcc("DepositAccount", "A", 1);
 		bV.createAcc("DepositAccount", "B", 0);
 		bV.createAcc("GiroAccount", "C", 0);
