@@ -1,4 +1,4 @@
-package bavaria.hightech.banking;
+package bavaria.hightech.banking.Interface;
 
 import bavaria.hightech.banking.Money.Currency;
 

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import bavaria.hightech.banking.BankAdmin;
 import bavaria.hightech.banking.DepositConditions;
 import bavaria.hightech.banking.GiroConditions;
+import bavaria.hightech.banking.Interface.*;
 
 public class BankAdminProxy implements BankAdmin {
 
