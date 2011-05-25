@@ -3,6 +3,7 @@ package bavaria.hightech.banking;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
@@ -107,14 +108,17 @@ public abstract class Account {
 
 		NumberFormat n = NumberFormat.getInstance();
 		n.setMaximumFractionDigits(2);
-		accountingEntry.insert(reason, n.format(amount), sign, currency);
+		accountingEntry.insert(reason, amount, sign, currency);
 	}
 
-	@Override
-	public String toString() {
+	public String toString(int key) {
 
 		NumberFormat n = NumberFormat.getInstance();
 		n.setMaximumFractionDigits(2);
+		
+		if (key == 1) {
+			accountingEntry.sortAmount();
+		}
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(

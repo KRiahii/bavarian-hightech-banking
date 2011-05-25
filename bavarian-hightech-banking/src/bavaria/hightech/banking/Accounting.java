@@ -8,14 +8,14 @@ import bavaria.hightech.time.TimeEmitter;
 public class Accounting {
 
 	private String reason;
-	private String amount;
+	private long amount;
 	private char sign;
 	private Currency currency;
 	private Calendar accountingDate;
 
-	Accounting(String reason, String amount, char sign, Currency currency) {
+	Accounting(String reason, long string, char sign, Currency currency) {
 		this.reason = reason;
-		this.amount = amount;
+		this.amount = string;
 		this.sign = sign;
 		this.currency = currency;
 		accountingDate = TimeEmitter.getTimeEmitter().getCalender();
@@ -35,7 +35,7 @@ public class Accounting {
 	 * 
 	 * @return
 	 */
-	public String getAmount() {
+	public long getAmount() {
 		return this.amount;
 	}
 
@@ -64,6 +64,17 @@ public class Accounting {
 	 */
 	public Calendar getAccountingDate() {
 		return accountingDate;
+	}
+
+	public boolean equals(Object o) {
+		if (!(o instanceof Accounting))
+			return false;
+		Accounting n = (Accounting) o;
+		return n.getReason().equals(getReason())
+				&& n.getAmount() == getAmount()
+				&& n.getSign() == getSign()
+				&& n.getCurrency().equals(getCurrency())
+				&& n.getAccountingDate().equals(getAccountingDate());
 	}
 
 }
