@@ -1,6 +1,7 @@
 package Proxy;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,9 +48,9 @@ public class BankAdminProxy implements BankAdmin {
 	}
 
 	@Override
-	public String accountsCurrent(int kontoNummer) {
-		logger.log(Level.FINE, "Iregendwas" + kontoNummer);
-		return bankA.accountsCurrent(kontoNummer);
+	public String accountsCurrent(int kontoNummer, int key) {
+		logger.log(Level.FINE, "Zeig das Konto " + kontoNummer + " sotiert nach " + key);
+		return bankA.accountsCurrent(kontoNummer, key);
 	}
 
 	@Override

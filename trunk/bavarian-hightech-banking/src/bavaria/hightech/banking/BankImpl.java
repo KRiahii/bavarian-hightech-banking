@@ -1,6 +1,7 @@
 package bavaria.hightech.banking;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
@@ -202,8 +203,8 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	 * @return
 	 */
 	@Override
-	public String accountsCurrent(int kontoNummer) {
-		return calculateIndex(kontoNummer).toString();
+	public String accountsCurrent(int kontoNummer, int key) {
+		return calculateIndex(kontoNummer).toString(key);
 	}
 
 	/**

@@ -1,6 +1,8 @@
 package bavaria.hightech.testit;
 
 import java.io.IOException;
+
+import Comparatoren.AmountComparator;
 import Proxy.BankAdminProxy;
 import Proxy.BankViewProxy;
 import bavaria.hightech.banking.*;
@@ -47,7 +49,7 @@ public class Test {
 		bV.showMoney(2001);
 
 		System.out.println("--------------------------");
-		System.out.println(bA.accountsCurrent(2001));
+		System.out.println(bA.accountsCurrent(2001, 1));
 
 		System.out.println("--------------------------");
 		bV.addMoney(1, 2000, Money.Currency.JAPANISCHERYEN);
@@ -55,7 +57,7 @@ public class Test {
 		bV.addMoney(300, 2000, Money.Currency.USDOLLAR);
 		bV.addMoney(4, 2000, Money.Currency.EURO);
 		bV.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
-		System.out.println(bA.accountsCurrent(2000));
+		System.out.println(bA.accountsCurrent(2000, 1));
 
 		System.out.println();
 		System.out.println("--------------------------");
@@ -69,11 +71,11 @@ public class Test {
 		bA.showDepositConditions();
 		TimeEmitter.getTimeEmitter().elapstime(5);
 		bV.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
-		System.out.println(bA.accountsCurrent(2002));
+		System.out.println(bA.accountsCurrent(2002, 1));
 
 		bV.requestMoney(5000, 2004, Money.Currency.EURO);
 		TimeEmitter.getTimeEmitter().elapstime(25);
-		System.out.println(bA.accountsCurrent(2004));
+		System.out.println(bA.accountsCurrent(2004, 1));
 		//bank.list();
 	}
 }
