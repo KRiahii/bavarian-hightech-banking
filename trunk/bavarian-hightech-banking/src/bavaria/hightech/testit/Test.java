@@ -74,5 +74,6 @@ public class Test {
 		bV.requestMoney(5000, 2004, Money.Currency.EURO);
 		TimeEmitter.getTimeEmitter().elapstime(25);
 		System.out.println(bA.accountsCurrent(2004));
+		//bank.list();
 	}
 }
