@@ -34,10 +34,16 @@ public class BankAdminProxy implements BankAdmin {
 	}
 
 	@Override
-	public void changeInterest(float sollzins, float habezins) {
+	public void changeGiroInterest(float sollzins, float habezins) {
 		logger.log(Level.FINE, "Zinsänderung: " + "Sollzins " + sollzins
 				+ " Habezins " + habezins);
-		bankA.changeInterest(sollzins, habezins);
+		bankA.changeGiroInterest(sollzins, habezins);
+	}
+	
+	@Override
+	public void changeDepositInterest(float zins) {
+		logger.log(Level.FINE, "Zinsänderung: " + "Zins " + zins);
+		bankA.changeDepositInterest(zins);
 	}
 
 	@Override
@@ -51,4 +57,5 @@ public class BankAdminProxy implements BankAdmin {
 		logger.log(Level.FINE, "Depositkonditionen anzeigen");
 		bankA.showDepositConditions();
 	}
+
 }

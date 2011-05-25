@@ -18,6 +18,10 @@ public class DepositConditions {
 	public float getInterest() {
 		return interest;
 	}
+	
+	public void setInterest(float interest) {
+		this.interest = interest;
+	}
 
 	/**
 	 * DepsoitConditions()
