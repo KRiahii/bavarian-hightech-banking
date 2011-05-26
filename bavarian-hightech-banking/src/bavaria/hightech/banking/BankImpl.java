@@ -1,7 +1,6 @@
 package bavaria.hightech.banking;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
@@ -190,9 +189,9 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 		Iterator<HashKey> it = accounts.keySet().iterator();
 		while (it.hasNext()) {
-			Object key = it.next();
+			HashKey key = it.next();
 			System.out.println("---------------------------");
-			System.out.println(accounts.get(key).toString());
+			System.out.println(accounts.get(key).toString(2));
 		}
 	}
 

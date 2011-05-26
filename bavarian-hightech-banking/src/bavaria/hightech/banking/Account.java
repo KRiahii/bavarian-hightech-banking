@@ -3,8 +3,6 @@ package bavaria.hightech.banking;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.Comparator;
-
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.time.TimeEmitter;
@@ -55,6 +53,11 @@ public abstract class Account {
 		return 0;
 	}
 
+	/**
+	 * getCreationDate()
+	 * 
+	 * @return createDate(Calendar)
+	 */
 	public Calendar getCreationDate() {
 		return createDate;
 	}
@@ -115,10 +118,8 @@ public abstract class Account {
 
 		NumberFormat n = NumberFormat.getInstance();
 		n.setMaximumFractionDigits(2);
-		
-		if (key == 1) {
-			accountingEntry.sortAmount();
-		}
+
+		accountingEntry.sort(key);
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(
