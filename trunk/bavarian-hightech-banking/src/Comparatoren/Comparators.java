@@ -14,11 +14,13 @@ public class Comparators {
 	public Comparators() {
 		Comparator<?> am = new AmountComparator();
 		Comparator<?> tm = new TimeComparator();
+		Comparator<?> an = new AlphaNumComparator(); 
 
 		this.map = new HashMap<Integer, Comparator<?>>();
 
 		map.put(1, am);
 		map.put(2, tm);
+		map.put(3, an);
 	}
 
 	public Comparator<?> getComparator(int key) {
@@ -38,6 +40,15 @@ public class Comparators {
 		public int compare(Object o1, Object o2) {
 			Calendar n1 = (Calendar) ((Accounting) o1).getAccountingDate();
 			Calendar n2 = (Calendar) ((Accounting) o2).getAccountingDate();
+			int lastCmp = n1.compareTo(n2);
+			return (lastCmp != 0 ? lastCmp : n1.compareTo(n2));
+		}
+	}
+	
+	class AlphaNumComparator implements Comparator<Object> {
+		public int compare(Object o1, Object o2) {
+			String n1 = (String) ((Accounting) o1).getReason();
+			String n2 = (String) ((Accounting) o2).getReason();
 			int lastCmp = n1.compareTo(n2);
 			return (lastCmp != 0 ? lastCmp : n1.compareTo(n2));
 		}
