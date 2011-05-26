@@ -56,7 +56,7 @@ public class Test {
 		bV.addMoney(300, 2000, Money.Currency.USDOLLAR);
 		bV.addMoney(4, 2000, Money.Currency.EURO);
 		bV.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
-		System.out.println(bA.accountsCurrent(2000, 2));
+		System.out.println(bA.accountsCurrent(2000, 3));
 
 		System.out.println();
 		System.out.println("--------------------------");
@@ -72,9 +72,11 @@ public class Test {
 		bV.requestMoney(4, 2000, Money.Currency.SCHWEIZERFRANKEN);
 		System.out.println(bA.accountsCurrent(2002, 2));
 
-		bV.requestMoney(5000, 2004, Money.Currency.EURO);
+		bV.requestMoney(4000, 2004, Money.Currency.EURO);
 		TimeEmitter.getTimeEmitter().elapstime(25);
+		System.out.println(bA.accountsCurrent(2004, 1));
 		System.out.println(bA.accountsCurrent(2004, 2));
-		bank.list();
+		System.out.println(bA.accountsCurrent(2004, 3));
+		//bank.list();
 	}
 }

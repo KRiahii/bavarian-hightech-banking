@@ -44,7 +44,7 @@ public class Booking {
 	}
 
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked"})
 	public void sort(int key) {
 		Comparators comp = new Comparators();
 		Collections.sort(list, (Comparator)comp.getComparator(key));
