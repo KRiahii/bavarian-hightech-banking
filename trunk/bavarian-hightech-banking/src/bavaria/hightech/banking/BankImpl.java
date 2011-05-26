@@ -8,9 +8,11 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import B2B.*;
 import bavaria.hightech.banking.Interface.BankAdmin;
 import bavaria.hightech.banking.Interface.BankCustomerView;
 import bavaria.hightech.banking.Money.Currency;
+import bavaria.hightech.exceptions.AccException;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
 
@@ -19,7 +21,7 @@ import bavaria.hightech.exceptions.TypException;
  * class to manage bank
  * 
  */
-public class BankImpl implements BankCustomerView, BankAdmin {
+public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 
 	class HashKey {
 		private String str;
@@ -54,6 +56,8 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	private Vector<DepositConditions> deposit;
 
 	private static Logger logger = Logger.getLogger(BankImpl.class.getName());
+
+	private BankRegistry br = BankRegistry.getInstance();
 
 	public BankImpl() throws SecurityException, IOException {
 
@@ -212,10 +216,12 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 	 * @param kontoNummer
 	 * @return
 	 */
-	private Account calculateIndex(int kontoNummer) {
+	public Account calculateIndex(int kontoNummer) {
 		// return accounts[kontoNummer - 2000];
 		String s = "" + (kontoNummer - 2000);
-		return accounts.get(new HashKey(s));
+
+		return (accounts.containsKey(new HashKey(s))) ? accounts.get(new HashKey(s)) : null;
+
 	}
 
 	/**
@@ -345,6 +351,24 @@ public class BankImpl implements BankCustomerView, BankAdmin {
 
 		for (int i = 0; i < deposit.size(); i++)
 			((DepositConditions) deposit.elementAt(i)).setInterest(Interest);
+	}
+
+	@Override
+	public boolean existAcc(int kNumber) {
+		return calculateIndex(kNumber) != null ? this.accounts.contains(calculateIndex(kNumber)) : false;
+	}
+
+	@Override
+	public void transferMoney(long amount, int kNumberFROM, int kNumberTO,
+			Currency currencyFROM, Currency currencyTO, String name)
+			throws AccException {
+
+		if (br.lookup(name).existAcc(kNumberTO)) {
+			this.requestMoney(amount, kNumberFROM, currencyFROM);
+			br.lookup(name).addMoney(amount, kNumberTO, currencyTO);
+		} else
+			throw new AccException("Invalid Account");
+
 	}
 
 }
