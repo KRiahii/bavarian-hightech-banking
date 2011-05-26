@@ -1,8 +1,5 @@
 package bavaria.hightech.banking.Interface;
 
-import java.util.Comparator;
-
-import Comparatoren.AmountComparator;
 import bavaria.hightech.banking.DepositConditions;
 import bavaria.hightech.banking.GiroConditions;
 

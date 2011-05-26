@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ListIterator;
 
-import Comparatoren.AmountComparator;
 import bavaria.hightech.banking.Money.Currency;
+import Comparatoren.Comparators;
 
 /**
  * 
@@ -31,8 +31,7 @@ public class Booking {
 	 * @param currency
 	 */
 
-	public void insert(String reason, long string, char sign,
-			Currency currency) {
+	public void insert(String reason, long string, char sign, Currency currency) {
 		list.add(this.itr.nextIndex(), new Accounting(reason, string, sign,
 				currency));
 	}
@@ -41,13 +40,16 @@ public class Booking {
 	 * clear() -empty the booking list
 	 */
 	public void clear() {
-
 		list = new ArrayList<Accounting>();
 	}
 
-	public void sortAmount() {
-		Collections.sort(list, new AmountComparator());
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void sort(int key) {
+		Comparators comp = new Comparators();
+		Collections.sort(list, (Comparator)comp.getComparator(key));
 	}
+
 	@Override
 	public String toString() {
 
