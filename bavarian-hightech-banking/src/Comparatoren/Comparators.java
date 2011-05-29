@@ -9,46 +9,46 @@ import bavaria.hightech.banking.Accounting;
 
 public class Comparators {
 
-	private Map<Integer, Comparator<?>> map;
+	private Map<Integer, Comparator<Accounting>> map;
 
 	public Comparators() {
-		Comparator<?> am = new AmountComparator();
-		Comparator<?> tm = new TimeComparator();
-		Comparator<?> an = new AlphaNumComparator(); 
+		Comparator<Accounting> am = new AmountComparator();
+		Comparator<Accounting> tm = new TimeComparator();
+		Comparator<Accounting> an = new AlphaNumComparator();
 
-		this.map = new HashMap<Integer, Comparator<?>>();
+		this.map = new HashMap<Integer, Comparator<Accounting>>();
 
 		map.put(1, am);
 		map.put(2, tm);
 		map.put(3, an);
 	}
 
-	public Comparator<?> getComparator(int key) {
-		return (Comparator<?>) map.get(key);
+	public Comparator<Accounting> getComparator(int key) {
+		return (Comparator<Accounting>) map.get(key);
 	}
 
-	class AmountComparator implements Comparator<Object> {
-		public int compare(Object o1, Object o2) {
-			Integer n1 = (int) ((Accounting) o1).getAmount();
-			Integer n2 = (int) ((Accounting) o2).getAmount();
+	class AmountComparator implements Comparator<Accounting> {
+		public int compare(Accounting o1, Accounting o2) {
+			Integer n1 = (int) o1.getAmount();
+			Integer n2 = (int) o2.getAmount();
 			int lastCmp = n1.compareTo(n2);
 			return (lastCmp != 0 ? lastCmp : n1.compareTo(n2));
 		}
 	}
-	
-	class TimeComparator implements Comparator<Object> {
-		public int compare(Object o1, Object o2) {
-			Calendar n1 = (Calendar) ((Accounting) o1).getAccountingDate();
-			Calendar n2 = (Calendar) ((Accounting) o2).getAccountingDate();
+
+	class TimeComparator implements Comparator<Accounting> {
+		public int compare(Accounting o1, Accounting o2) {
+			Calendar n1 = o1.getAccountingDate();
+			Calendar n2 = o2.getAccountingDate();
 			int lastCmp = n1.compareTo(n2);
 			return (lastCmp != 0 ? lastCmp : n1.compareTo(n2));
 		}
 	}
-	
-	class AlphaNumComparator implements Comparator<Object> {
-		public int compare(Object o1, Object o2) {
-			String n1 = (String) ((Accounting) o1).getReason();
-			String n2 = (String) ((Accounting) o2).getReason();
+
+	class AlphaNumComparator implements Comparator<Accounting> {
+		public int compare(Accounting o1, Accounting o2) {
+			String n1 = o1.getReason();
+			String n2 = o2.getReason();
 			int lastCmp = n1.compareTo(n2);
 			return (lastCmp != 0 ? lastCmp : n1.compareTo(n2));
 		}

@@ -4,9 +4,6 @@ import java.util.TimerTask;
 import java.util.Timer;
 import java.util.Calendar;
 
-import bavaria.hightech.exceptions.MoneyException;
-import bavaria.hightech.testit.Test;
-
 /**
  * 
  * time emitter
@@ -15,27 +12,10 @@ import bavaria.hightech.testit.Test;
 public final class TimeEmitter {
 
 	private Calendar calendar;
-	private Calendar revcalendar;
 	private static TimeEmitter timeEmitter;
 
 	private TimeEmitter() {
 		calendar = Calendar.getInstance();
-		revcalendar = Calendar.getInstance();
-	}
-
-	/**
-	 * elapstime()
-	 * 
-	 * @param time
-	 */
-	public void elapstime(int time) {
-		Quarz quarz = new Quarz();
-		revcalendar.add(Calendar.DATE, time);
-		revcalendar.add(Calendar.SECOND, 1);
-		quarz.startTimeing();
-		while (calendar.before(revcalendar))
-			;
-		quarz.stopTimeing();
 	}
 
 	/**
@@ -69,13 +49,17 @@ public final class TimeEmitter {
 		private Timer timer;
 		private Clock clock;
 		private int counter = 1;
+		
+		public Clock getClock () {
+			return clock;
+		}
 
-		private void timewarper(int value) throws MoneyException {
+		private void timewarper(int value) {
 			calendar.add(Calendar.SECOND, value);
 			counter++;
 
-			if (counter == 151) {
-				Test.bank.chargeInterest();
+			if (counter == 152) {
+				stopTimeing();
 				counter = 1;
 			}
 		}
@@ -87,12 +71,7 @@ public final class TimeEmitter {
 
 			timer.scheduleAtFixedRate(new TimerTask() {
 				public void run() {
-					try {
-						Quarz.this.timewarper(576);
-					} catch (MoneyException e) {
-
-						e.printStackTrace();
-					}
+					Quarz.this.timewarper(576);
 				}
 			}, 0, 1);
 		}
