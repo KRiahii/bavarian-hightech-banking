@@ -65,4 +65,8 @@ public class Clock extends JFrame {
 		ticker.cancel();
 		setVisible(false);
 	}
+	
+	public void showMe() {
+		setVisible(true);
+	}
 }

@@ -44,7 +44,7 @@ public class Booking {
 	}
 
 
-	@SuppressWarnings({ "unchecked"})
+	@SuppressWarnings({ "unchecked", "rawtypes"})
 	public void sort(int key) {
 		Comparators comp = new Comparators();
 		Collections.sort(list, (Comparator)comp.getComparator(key));
@@ -69,21 +69,6 @@ public class Booking {
 			sb.append("\n");
 
 		}
-
-		// for (; itrBuffer.isValid(); itrBuffer.advance()) {
-		// sb.append(((Accounting) itrBuffer.retrieve()).getReason() + ": ");
-		// sb.append(((Accounting) itrBuffer.retrieve()).getSign());
-		// sb.append(((Accounting) itrBuffer.retrieve()).getAmount() + " ");
-		// sb.append(((Accounting) itrBuffer.retrieve()).getCurrency() + "\n");
-		// sb.append("Time: "
-		// + df.format(((Accounting) itrBuffer.retrieve())
-		// .getAccountingDate().getTime()) + " ");
-		// sb.append(tf.format(((Accounting) itrBuffer.retrieve())
-		// .getAccountingDate().getTime()));
-		//
-		// sb.append("\n");
-		// }
-
 		return sb.toString();
 	}
 }

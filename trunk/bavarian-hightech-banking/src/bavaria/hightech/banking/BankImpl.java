@@ -1,13 +1,10 @@
 package bavaria.hightech.banking;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Vector;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import B2B.*;
 import bavaria.hightech.banking.Interface.BankAdmin;
 import bavaria.hightech.banking.Interface.BankCustomerView;
@@ -15,6 +12,8 @@ import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.AccException;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.exceptions.TypException;
+import bavaria.hightech.time.TimeEmitter;
+import bavaria.hightech.time.TimeEmitter.Quarz;
 
 /**
  * 
@@ -46,31 +45,48 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	}
 
 	private Hashtable<HashKey, Account> accounts;
-	// private Account[] accounts;
 	private int count;
-
-	// private GiroConditions[] giro;
-	private Vector<GiroConditions> giro;
-
-	// private DepositConditions[] deposit;
-	private Vector<DepositConditions> deposit;
-
-	private static Logger logger = Logger.getLogger(BankImpl.class.getName());
+	private java.util.List<GiroConditions> giro;
+	private java.util.List<DepositConditions> deposit;
+	
+	private TimeEmitter timeem;
+	private Calendar calendar;
+	private Calendar revcalendar;
 
 	private BankRegistry br = BankRegistry.getInstance();
 
 	public BankImpl() throws SecurityException, IOException {
 
-		// this.accounts = new Account[20];
 		this.accounts = new Hashtable<HashKey, Account>();
 		this.count = 0;
+		this.giro = new ArrayList<GiroConditions>(3);
+		this.deposit = new ArrayList<DepositConditions>(3);
+		this.timeem = TimeEmitter.getTimeEmitter();
 
 		defaultConditions();
-
-		FileHandler handler = new FileHandler("BankImpl.log");
-		logger.addHandler(handler);
 	}
 
+	public void elapseTime(int time) {
+		calendar = timeem.getCalender();
+		revcalendar = timeem.getCalender();
+		Quarz quarz = null;
+		
+		for(int i = 0; i <= time; i++) {
+			revcalendar.add(Calendar.DATE, 1);
+			quarz = timeem.new Quarz();
+			quarz.startTimeing();
+			while (calendar.before(revcalendar)) {
+				calendar = timeem.getCalender();
+			}
+			try {
+				chargeInterest();
+			} catch (MoneyException e) {
+				e.printStackTrace();
+			}
+		}
+		quarz.getClock().showMe();
+	}
+	
 	/**
 	 * createAcc()
 	 * 
@@ -81,14 +97,13 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 
 		if (typ.equals("GiroAccount"))
 			calculateIndex(2000 + count, new GiroAccount(2000 + count++,
-					kHolder, (GiroConditions) giro.elementAt(key)));
+					kHolder, giro.get(key)));
 
 		else if (typ.equals("DepositAccount"))
 			calculateIndex(2000 + count, new DepositAccount(2000 + count++,
-					kHolder, (DepositConditions) deposit.elementAt(key)));
+					kHolder, (DepositConditions) deposit.get(key)));
 
 		else {
-			logger.log(Level.WARNING, "TypException invalid typ " + typ);
 			throw new TypException("invalid typ");
 		}
 	}
@@ -105,7 +120,6 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 			calculateIndex(kNumber).manageMoney("deposited", amount, '+',
 					currency);
 		} catch (MoneyException e) {
-			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 	}
 
@@ -121,7 +135,6 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 			calculateIndex(kNumber).manageMoney("detached", amount, '-',
 					currency);
 		} catch (MoneyException e) {
-			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 	}
 
@@ -138,14 +151,12 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 			calculateIndex(kNummerFROM).manageMoney("bank transfer", amount,
 					'-', currencyFROM);
 		} catch (MoneyException e) {
-			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 
 		try {
 			calculateIndex(kNummerTO).manageMoney("deposit", amount, '+',
 					currencyTO);
 		} catch (MoneyException e) {
-			logger.log(Level.WARNING, "invalid amount " + amount, e);
 		}
 	}
 
@@ -156,7 +167,6 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 */
 	@Override
 	public void showMoney(int kNumber) {
-
 		System.out.println(">> " + calculateIndex(kNumber).getAccountBalance()
 				+ " Account: " + calculateIndex(kNumber).getKnumber());
 	}
@@ -167,11 +177,6 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 * @throws MoneyException
 	 */
 	public void chargeInterest() throws MoneyException {
-
-		// for (int i = 0; i < accounts.length; i++)
-		// if (accounts[i] != null)
-		// accounts[i].payInterest();
-
 		Iterator<HashKey> it = accounts.keySet().iterator();
 		while (it.hasNext()) {
 			Object key = it.next();
@@ -183,14 +188,6 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 * list()
 	 */
 	public void list() {
-
-		// for (int i = 0; i < accounts.length; i++)
-		// if (accounts[i] != null) {
-		// System.out.println("---------------------------");
-		// System.out.println(accounts[i].toString());
-		// } else
-		// return;
-
 		Iterator<HashKey> it = accounts.keySet().iterator();
 		while (it.hasNext()) {
 			HashKey key = it.next();
@@ -217,10 +214,10 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 * @return
 	 */
 	public Account calculateIndex(int kontoNummer) {
-		// return accounts[kontoNummer - 2000];
 		String s = "" + (kontoNummer - 2000);
 
-		return (accounts.containsKey(new HashKey(s))) ? accounts.get(new HashKey(s)) : null;
+		return (accounts.containsKey(new HashKey(s))) ? accounts
+				.get(new HashKey(s)) : null;
 
 	}
 
@@ -231,7 +228,6 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 * @param obj
 	 */
 	private void calculateIndex(int kontoNummer, Account obj) {
-		// accounts[kontoNummer - 2000] = obj;
 		String s = "" + (kontoNummer - 2000);
 		accounts.put(new HashKey(s), obj);
 	}
@@ -240,33 +236,13 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 * defaultConditions() -create default Conditions
 	 */
 	private void defaultConditions() {
+		giro.add(0, new GiroConditions(100));
+		giro.add(1, new GiroConditions(500));
+		giro.add(2, new GiroConditions(1000));
 
-		// this.giro = new GiroConditions[3];
-		this.giro = new Vector<GiroConditions>(3, 1);
-		giro.setSize(3);
-
-		// this.deposit = new DepositConditions[3];
-		this.deposit = new Vector<DepositConditions>(3, 1);
-		deposit.setSize(3);
-
-		// giro[0] = new GiroConditions(100);
-		giro.setElementAt(new GiroConditions(100), 0);
-
-		// giro[1] = new GiroConditions(500);
-		giro.setElementAt(new GiroConditions(500), 1);
-
-		// giro[2] = new GiroConditions(1000);
-		giro.setElementAt(new GiroConditions(1000), 2);
-
-		// deposit[0] = new DepositConditions(1.34f, 2);
-		deposit.setElementAt(new DepositConditions(1.34f, 2), 0);
-
-		// deposit[1] = new DepositConditions(2.34f, 6);
-		deposit.setElementAt(new DepositConditions(2.34f, 2), 1);
-
-		// deposit[2] = new DepositConditions(3.34f, 12);
-		deposit.setElementAt(new DepositConditions(3.34f, 2), 2);
-
+		deposit.add(0, new DepositConditions(1.34f, 2));
+		deposit.add(1, new DepositConditions(2.34f, 2));
+		deposit.add(2, new DepositConditions(3.34f, 2));
 	}
 
 	/**
@@ -274,62 +250,32 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 */
 	@Override
 	public void showDepositConditions() {
-
 		for (int i = 0; i < this.deposit.size(); i++)
-			System.out.println(deposit.elementAt(i).toString());
+			System.out.println(deposit.get(i).toString());
 	}
 
 	/**
 	 * showGiroConditions()
 	 */
 	public void showGiroConditions() {
-
 		for (int i = 0; i < this.giro.size(); i++)
-			System.out.println(giro.elementAt(i).toString());
+			System.out.println(giro.get(i).toString());
 	}
 
 	/**
 	 * addCondition() -add conditions for deposit accounts
 	 */
 	public void addCondition(DepositConditions fk) {
-
-		// DepositConditions[] buffer = new
-		// DepositConditions[this.deposit.length];
-
-		// for (int i = 0; i < buffer.length; i++)
-		// buffer[i] = this.deposit[i];
-
-		// this.deposit = new DepositConditions[buffer.length + 1];
-
-		// for (int i = 0; i < buffer.length; i++)
-		// this.deposit[i] = buffer[i];
-
-		// this.deposit[buffer.length] = fk;
-
 		int i = deposit.size() - 1;
-		deposit.setElementAt(fk, i);
-
+		deposit.add(i, fk);
 	}
 
 	/**
 	 * addCondition() -add condition for giro accounts
 	 */
 	public void addCondition(GiroConditions gk) {
-
-		// GiroConditions[] buffer = new GiroConditions[this.giro.length];
-
-		// for (int i = 0; i < buffer.length; i++)
-		// buffer[i] = this.giro[i];
-
-		// this.giro = new GiroConditions[buffer.length + 1];
-
-		// for (int i = 0; i < buffer.length; i++)
-		// this.giro[i] = buffer[i];
-
-		// this.giro[buffer.length] = gk;
-
 		int i = giro.size() - 1;
-		giro.setElementAt(gk, i);
+		giro.add(i, gk);
 	}
 
 	/**
@@ -339,7 +285,7 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	public void changeGiroInterest(float debitInterest, float creditInterest) {
 
 		for (int i = 0; i < giro.size(); i++)
-			((GiroConditions) giro.elementAt(i)).setInterest(debitInterest,
+			((GiroConditions) giro.get(i)).setInterest(debitInterest,
 					creditInterest);
 	}
 
@@ -350,12 +296,13 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	public void changeDepositInterest(float Interest) {
 
 		for (int i = 0; i < deposit.size(); i++)
-			((DepositConditions) deposit.elementAt(i)).setInterest(Interest);
+			((DepositConditions) deposit.get(i)).setInterest(Interest);
 	}
 
 	@Override
 	public boolean existAcc(int kNumber) {
-		return calculateIndex(kNumber) != null ? this.accounts.contains(calculateIndex(kNumber)) : false;
+		return calculateIndex(kNumber) != null ? this.accounts
+				.contains(calculateIndex(kNumber)) : false;
 	}
 
 	@Override
@@ -368,7 +315,5 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 			br.lookup(name).addMoney(amount, kNumberTO, currencyTO);
 		} else
 			throw new AccException("Invalid Account");
-
 	}
-
 }
