@@ -29,8 +29,8 @@ public class Comparators {
 
 	class AmountComparator implements Comparator<Accounting> {
 		public int compare(Accounting o1, Accounting o2) {
-			Integer n1 = (int) o1.getAmount();
-			Integer n2 = (int) o2.getAmount();
+			Long n1 = o1.getAmount();
+			Long n2 = o2.getAmount();
 			int lastCmp = n1.compareTo(n2);
 			return (lastCmp != 0 ? lastCmp : n1.compareTo(n2));
 		}
