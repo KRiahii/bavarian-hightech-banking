@@ -1,10 +1,17 @@
 package bavaria.hightech.banking;
 
 import java.io.IOException;
+import java.io.OutputStream;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import formater.AccFormater;
+import formater.FactoryDynamicImpl;
 import B2B.*;
 import bavaria.hightech.banking.Interface.BankAdmin;
 import bavaria.hightech.banking.Interface.BankCustomerView;
@@ -22,46 +29,28 @@ import bavaria.hightech.time.TimeEmitter.Quarz;
  */
 public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 
-	class HashKey {
-		private String str;
-
-		public HashKey(String str) {
-			this.str = str;
-		}
-
-		public String toString() {
-			return str;
-		}
-
-		public int hashCode() {
-			return str.hashCode();
-		}
-
-		public boolean equals(Object o) {
-			if (o instanceof HashKey)
-				return (str.equals(((HashKey) o).str));
-			return false;
-		}
-	}
-
 	private Hashtable<HashKey, Account> accounts;
 	private int count;
 	private java.util.List<GiroConditions> giro;
 	private java.util.List<DepositConditions> deposit;
-	
+
 	private TimeEmitter timeem;
 	private Calendar calendar;
 	private Calendar revcalendar;
+	private Locale currentLocale;
+	private ResourceBundle bank;
 
 	private BankRegistry br = BankRegistry.getInstance();
 
-	public BankImpl() throws SecurityException, IOException {
+	public BankImpl(Locale currentLocale) throws SecurityException, IOException {
 
 		this.accounts = new Hashtable<HashKey, Account>();
 		this.count = 0;
 		this.giro = new ArrayList<GiroConditions>(3);
 		this.deposit = new ArrayList<DepositConditions>(3);
 		this.timeem = TimeEmitter.getTimeEmitter();
+		this.currentLocale = currentLocale;
+		this.bank = ResourceBundle.getBundle("i18n/BankBundle", currentLocale);
 
 		defaultConditions();
 	}
@@ -70,8 +59,8 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 		calendar = timeem.getCalender();
 		revcalendar = timeem.getCalender();
 		Quarz quarz = null;
-		
-		for(int i = 0; i <= time; i++) {
+
+		for (int i = 0; i <= time; i++) {
 			revcalendar.add(Calendar.DATE, 1);
 			quarz = timeem.new Quarz();
 			quarz.startTimeing();
@@ -86,7 +75,7 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 		}
 		quarz.getClock().showMe();
 	}
-	
+
 	/**
 	 * createAcc()
 	 * 
@@ -117,8 +106,8 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	public void addMoney(long amount, int kNumber, Currency currency) {
 
 		try {
-			calculateIndex(kNumber).manageMoney("deposited", amount, '+',
-					currency);
+			calculateIndex(kNumber).manageMoney(bank.getString("deposited"),
+					amount, '+', currency);
 		} catch (MoneyException e) {
 		}
 	}
@@ -132,8 +121,8 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	public void requestMoney(long amount, int kNumber, Currency currency) {
 
 		try {
-			calculateIndex(kNumber).manageMoney("detached", amount, '-',
-					currency);
+			calculateIndex(kNumber).manageMoney(bank.getString("detached"),
+					amount, '-', currency);
 		} catch (MoneyException e) {
 		}
 	}
@@ -148,14 +137,14 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 			Currency currencyFROM, Currency currencyTO) {
 
 		try {
-			calculateIndex(kNummerFROM).manageMoney("bank transfer", amount,
-					'-', currencyFROM);
+			calculateIndex(kNummerFROM).manageMoney(
+					bank.getString("bankTransfer"), amount, '-', currencyFROM);
 		} catch (MoneyException e) {
 		}
 
 		try {
-			calculateIndex(kNummerTO).manageMoney("deposit", amount, '+',
-					currencyTO);
+			calculateIndex(kNummerTO).manageMoney(bank.getString("deposited"),
+					amount, '+', currencyTO);
 		} catch (MoneyException e) {
 		}
 	}
@@ -168,7 +157,8 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	@Override
 	public void showMoney(int kNumber) {
 		System.out.println(">> " + calculateIndex(kNumber).getAccountBalance()
-				+ " Account: " + calculateIndex(kNumber).getKnumber());
+				+ " " + bank.getString("accountnumber") + ": "
+				+ calculateIndex(kNumber).getKnumber());
 	}
 
 	/**
@@ -180,7 +170,7 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 		Iterator<HashKey> it = accounts.keySet().iterator();
 		while (it.hasNext()) {
 			Object key = it.next();
-			((Account) accounts.get(key)).payInterest();
+			((Account) accounts.get(key)).payInterest(currentLocale);
 		}
 	}
 
@@ -192,7 +182,7 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 		while (it.hasNext()) {
 			HashKey key = it.next();
 			System.out.println("---------------------------");
-			System.out.println(accounts.get(key).toString(2));
+			System.out.println(accounts.get(key).toString(2, currentLocale));
 		}
 	}
 
@@ -204,7 +194,16 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	 */
 	@Override
 	public String accountsCurrent(int kontoNummer, int key) {
-		return calculateIndex(kontoNummer).toString(key);
+		return calculateIndex(kontoNummer).toString(key, currentLocale);
+	}
+
+	public void getStatement(int kontoNummer, int key, OutputStream os,
+			String mimeTyp) throws IOException {
+
+		AccFormater formater = new FactoryDynamicImpl().getAccFormater(mimeTyp);
+
+		os.write(formater.addAccData(calculateIndex(kontoNummer), key,
+				currentLocale).getBytes());
 	}
 
 	/**
@@ -316,4 +315,27 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 		} else
 			throw new AccException("Invalid Account");
 	}
+
+	class HashKey {
+		private String str;
+
+		public HashKey(String str) {
+			this.str = str;
+		}
+
+		public String toString() {
+			return str;
+		}
+
+		public int hashCode() {
+			return str.hashCode();
+		}
+
+		public boolean equals(Object o) {
+			if (o instanceof HashKey)
+				return (str.equals(((HashKey) o).str));
+			return false;
+		}
+	}
+	
 }

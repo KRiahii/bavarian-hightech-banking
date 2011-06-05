@@ -1,10 +1,13 @@
 package bavaria.hightech.banking;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.ListIterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import bavaria.hightech.banking.Money.Currency;
 import Comparatoren.Comparators;
@@ -16,8 +19,9 @@ import Comparatoren.Comparators;
  */
 public class Booking {
 
-	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
+	DateFormat dateFormat;
+	DateFormat timeFormat;
+	NumberFormat numberFormat;
 
 	ArrayList<Accounting> list = new ArrayList<Accounting>();
 	ListIterator<Accounting> itr = list.listIterator();
@@ -43,15 +47,20 @@ public class Booking {
 		list = new ArrayList<Accounting>();
 	}
 
-
-	@SuppressWarnings({ "unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void sort(int key) {
 		Comparators comp = new Comparators();
-		Collections.sort(list, (Comparator)comp.getComparator(key));
+		Collections.sort(list, (Comparator) comp.getComparator(key));
 	}
 
-	@Override
-	public String toString() {
+	public String toString(Locale currentLocale) {
+
+		dateFormat = DateFormat.getDateInstance(DateFormat.FULL, currentLocale);
+		timeFormat = DateFormat.getTimeInstance(DateFormat.FULL, currentLocale);
+		numberFormat = NumberFormat.getNumberInstance(currentLocale);
+
+		ResourceBundle bank = ResourceBundle.getBundle("i18n/BankBundle",
+				currentLocale);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -61,11 +70,12 @@ public class Booking {
 			Accounting obj = (Accounting) itrBuffer.next();
 			sb.append(obj.getReason() + ": ");
 			sb.append(obj.getSign());
-			sb.append(obj.getAmount() + " ");
+			sb.append(numberFormat.format(obj.getAmount()) + " ");
 			sb.append(obj.getCurrency() + "\n");
-			sb.append("Time: " + df.format(obj.getAccountingDate().getTime())
+			sb.append(bank.getString("time") + ": "
+					+ dateFormat.format(obj.getAccountingDate().getTime())
 					+ " ");
-			sb.append(tf.format(obj.getAccountingDate().getTime()));
+			sb.append(timeFormat.format(obj.getAccountingDate().getTime()));
 			sb.append("\n");
 
 		}

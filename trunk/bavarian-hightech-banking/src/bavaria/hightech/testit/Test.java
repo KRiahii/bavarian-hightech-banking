@@ -2,9 +2,12 @@ package bavaria.hightech.testit;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;
+import java.util.Locale;
+
 import B2B.BankRegistry;
 import bavaria.hightech.banking.*;
-import bavaria.hightech.banking.Interface.*;
+import bavaria.hightech.banking.Interface.BankAdmin;
+import bavaria.hightech.banking.Interface.BankCustomerView;
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.*;
 import Proxy.*;
@@ -22,10 +25,10 @@ public class Test {
 	public static void main(String[] args) throws MoneyException, TypException,
 			SecurityException, IOException, AccException {
 
-		// BankCustomerView bV = new BankViewProxy(bank);
-		// BankAdmin bA = new BankAdminProxy(bank);
+		Locale currentLocale = new Locale("en", "us");
+		// Locale currentLocale = new Locale("de","de");
 
-		BankImpl bank = new BankImpl();
+		BankImpl bank = new BankImpl(currentLocale);
 
 		DebugHandler handler = new DebugHandler(bank);
 
@@ -85,10 +88,15 @@ public class Test {
 		bV.requestMoney(5000, 2004, Money.Currency.EURO);
 		bank.elapseTime(25);
 		System.out.println(bA.accountsCurrent(2004, 1));
-		//bank.list();
 
-		BankImpl bank1 = new BankImpl();
-		BankImpl bank2 = new BankImpl();
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
+		bank.getStatement(2004, 1, System.out, "text/html");
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
+
+		BankImpl bank1 = new BankImpl(currentLocale);
+		BankImpl bank2 = new BankImpl(currentLocale);
 
 		BankRegistry br = BankRegistry.getInstance();
 

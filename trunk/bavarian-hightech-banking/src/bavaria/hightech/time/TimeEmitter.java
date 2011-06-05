@@ -49,8 +49,8 @@ public final class TimeEmitter {
 		private Timer timer;
 		private Clock clock;
 		private int counter = 1;
-		
-		public Clock getClock () {
+
+		public Clock getClock() {
 			return clock;
 		}
 
