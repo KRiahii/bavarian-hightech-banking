@@ -71,8 +71,7 @@ public class Accounting {
 			return false;
 		Accounting n = (Accounting) o;
 		return n.getReason().equals(getReason())
-				&& n.getAmount() == getAmount()
-				&& n.getSign() == getSign()
+				&& n.getAmount() == getAmount() && n.getSign() == getSign()
 				&& n.getCurrency().equals(getCurrency())
 				&& n.getAccountingDate().equals(getAccountingDate());
 	}

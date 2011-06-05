@@ -105,28 +105,23 @@ public class Money {
 		switch (currency) {
 		case EURO:
 			this.value = (long) (this.value + (value * Currency.EURO
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case USDOLLAR:
 			this.value = (long) (this.value + (value * Currency.USDOLLAR
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case SCHWEIZERFRANKEN:
 			this.value = (long) (this.value + (value * Currency.SCHWEIZERFRANKEN
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case JAPANISCHERYEN:
 			this.value = (long) (this.value + (value * Currency.JAPANISCHERYEN
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case BRITISCHESPFUND:
 			this.value = (long) (this.value + (value * Currency.BRITISCHESPFUND
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		}
 
@@ -143,28 +138,23 @@ public class Money {
 		switch (currency) {
 		case EURO:
 			this.value = (long) (this.value - (value * Currency.EURO
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case USDOLLAR:
 			this.value = (long) (this.value - (value * Currency.USDOLLAR
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case SCHWEIZERFRANKEN:
 			this.value = (long) (this.value - (value * Currency.SCHWEIZERFRANKEN
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case JAPANISCHERYEN:
 			this.value = (long) (this.value - (value * Currency.JAPANISCHERYEN
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		case BRITISCHESPFUND:
 			this.value = (long) (this.value - (value * Currency.BRITISCHESPFUND
-					.getFactor())
-					/ this.currency.getFactor());
+					.getFactor()) / this.currency.getFactor());
 			break;
 		}
 		return this.value;

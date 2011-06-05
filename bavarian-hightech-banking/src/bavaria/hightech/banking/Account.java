@@ -3,6 +3,8 @@ package bavaria.hightech.banking;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 import bavaria.hightech.time.TimeEmitter;
@@ -20,8 +22,10 @@ public abstract class Account {
 	private String kHolder;
 	private Booking accountingEntry;
 	public Calendar createDate;
-	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
+
+	DateFormat dateFormat;
+	DateFormat timeFormat;
+	NumberFormat numberFormat;
 
 	public Account(int kNummer, String kInhaber) {
 
@@ -109,36 +113,74 @@ public abstract class Account {
 		else
 			this.kBalance.subMoney(amount, currency);
 
-		NumberFormat n = NumberFormat.getInstance();
-		n.setMaximumFractionDigits(2);
 		accountingEntry.insert(reason, amount, sign, currency);
 	}
 
-	public String toString(int key) {
+	public String toString(int key, Locale currentLocale) {
 
-		NumberFormat n = NumberFormat.getInstance();
-		n.setMaximumFractionDigits(2);
+		ResourceBundle bank = ResourceBundle.getBundle("i18n/BankBundle",
+				currentLocale);
+
+		dateFormat = DateFormat.getDateInstance(DateFormat.FULL, currentLocale);
+		timeFormat = DateFormat.getTimeInstance(DateFormat.FULL, currentLocale);
+		numberFormat = NumberFormat.getNumberInstance(currentLocale);
 
 		accountingEntry.sort(key);
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"creation date: "
+				bank.getString("creationDate") + ": "
 						+ dateFormat.format(getCreationDate().getTime()) + " "
 						+ timeFormat.format(getCreationDate().getTime()))
 				.append("\n");
-		sb.append("Name: " + getHolder()).append("\n");
-		sb.append("Accountnumber: " + getKnumber()).append("\n");
-		sb.append("Credit account: " + n.format(getAccountBalance())).append(
-				"\n");
-		sb.append("currency: " + this.kBalance.getCurrency());
+		sb.append(bank.getString("name") + ": " + getHolder()).append("\n");
+		sb.append(
+				bank.getString("accountnumber") + ": "
+						+ numberFormat.format(getKnumber())).append("\n");
+		sb.append(
+				bank.getString("creditAccount") + ": "
+						+ numberFormat.format(getAccountBalance()))
+				.append("\n");
+		sb.append(bank.getString("currency") + ": "
+				+ this.kBalance.getCurrency());
 		sb.append("\n--------------------------------------\n");
-		sb.append(accountingEntry.toString());
+		sb.append(accountingEntry.toString(currentLocale));
 
 		return sb.toString();
 	}
 
+	public String getCreation(Locale currentLocale) {
+		dateFormat = DateFormat.getDateInstance(DateFormat.FULL, currentLocale);
+		timeFormat = DateFormat.getTimeInstance(DateFormat.FULL, currentLocale);
+
+		return dateFormat.format(getCreationDate().getTime()) + " "
+				+ timeFormat.format(getCreationDate().getTime());
+	}
+
+	public String getName() {
+		return getHolder();
+	}
+
+	public int getAccNumber() {
+		return getKnumber();
+	}
+
+	public Currency getCurrency() {
+		return kBalance.getCurrency();
+	}
+
+	public String getEntry(Locale currentLocale) {
+		return accountingEntry.toString(currentLocale);
+	}
+
 	abstract public void printTyp();
 
-	abstract public void payInterest() throws MoneyException;
+	abstract public void payInterest(Locale currentLocale)
+			throws MoneyException;
+
+	public String getCredit(Locale currentLocale) {
+		numberFormat = NumberFormat.getNumberInstance(currentLocale);
+		return numberFormat.format(getAccountBalance());
+	}
+	
 }

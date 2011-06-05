@@ -1,5 +1,8 @@
 package bavaria.hightech.banking;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import bavaria.hightech.banking.Money.Currency;
 import bavaria.hightech.exceptions.MoneyException;
 
@@ -24,10 +27,14 @@ public class DepositAccount extends Account {
 	}
 
 	@Override
-	public void payInterest() throws MoneyException {
+	public void payInterest(Locale currentLocale) throws MoneyException {
+
+		ResourceBundle bank = ResourceBundle.getBundle("i18n/BankBundle",
+				currentLocale);
 
 		long amount = (long) ((this.getAccountBalance() / 100) * 2.34);
-		this.manageMoney("interest", amount, '+', this.kBalance.getCurrency());
+		this.manageMoney(bank.getString("interest"), amount, '+',
+				this.kBalance.getCurrency());
 	}
 
 	@Override
