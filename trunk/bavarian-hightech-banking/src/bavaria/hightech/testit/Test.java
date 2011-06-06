@@ -1,5 +1,6 @@
 package bavaria.hightech.testit;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
 import java.util.Locale;
@@ -25,8 +26,8 @@ public class Test {
 	public static void main(String[] args) throws MoneyException, TypException,
 			SecurityException, IOException, AccException {
 
-		Locale currentLocale = new Locale("en", "us");
-		// Locale currentLocale = new Locale("de","de");
+		//Locale currentLocale = new Locale("en", "us");
+		Locale currentLocale = new Locale("de","de");
 
 		BankImpl bank = new BankImpl(currentLocale);
 
@@ -91,7 +92,8 @@ public class Test {
 
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
-		bank.getStatement(2004, 1, System.out, "text/html");
+		FileOutputStream fos = new FileOutputStream("test.txt");
+		bank.getStatement(2004, 1, fos, "text/plain");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 

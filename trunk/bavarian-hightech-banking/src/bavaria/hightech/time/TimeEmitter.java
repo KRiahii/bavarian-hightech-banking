@@ -48,20 +48,13 @@ public final class TimeEmitter {
 	public class Quarz {
 		private Timer timer;
 		private Clock clock;
-		private int counter = 1;
-
-		public Clock getClock() {
+		
+		public Clock getClock () {
 			return clock;
 		}
 
 		private void timewarper(int value) {
 			calendar.add(Calendar.SECOND, value);
-			counter++;
-
-			if (counter == 152) {
-				stopTimeing();
-				counter = 1;
-			}
 		}
 
 		public void startTimeing() {
@@ -71,13 +64,12 @@ public final class TimeEmitter {
 
 			timer.scheduleAtFixedRate(new TimerTask() {
 				public void run() {
-					Quarz.this.timewarper(576);
+					Quarz.this.timewarper(600);
 				}
 			}, 0, 1);
 		}
 
 		public void stopTimeing() {
-			calendar.add(Calendar.SECOND, -576);
 			timer.cancel();
 			clock.stop();
 		}

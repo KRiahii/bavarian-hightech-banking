@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import bavaria.hightech.exceptions.FormaterFailException;
+
 public class FactoryDynamicImpl implements FormaterFactory {
 
 	@Override
@@ -20,20 +22,15 @@ public class FactoryDynamicImpl implements FormaterFactory {
 		try {
 			return (AccFormater) Class.forName(mimeTyp).newInstance();
 		} catch (IllegalArgumentException e) {
-			System.out.println(e);
-			return null;
+			throw new FormaterFailException("formation failed");
 		} catch (SecurityException e) {
-			System.out.println(e);
-			return null;
+			throw new FormaterFailException("formation failed");
 		} catch (InstantiationException e) {
-			System.out.println(e);
-			return null;
+			throw new FormaterFailException("formation failed");
 		} catch (IllegalAccessException e) {
-			System.out.println(e);
-			return null;
+			throw new FormaterFailException("instance not found");
 		} catch (ClassNotFoundException e) {
-			System.out.println(e);
-			return null;
+			throw new FormaterFailException("creat new formater class");
 		}
 	}
 }

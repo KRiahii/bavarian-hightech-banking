@@ -71,12 +71,12 @@ public class Booking {
 			sb.append(obj.getReason() + ": ");
 			sb.append(obj.getSign());
 			sb.append(numberFormat.format(obj.getAmount()) + " ");
-			sb.append(obj.getCurrency() + "\n");
+			sb.append(obj.getCurrency() + System.getProperty("line.separator"));
 			sb.append(bank.getString("time") + ": "
 					+ dateFormat.format(obj.getAccountingDate().getTime())
 					+ " ");
 			sb.append(timeFormat.format(obj.getAccountingDate().getTime()));
-			sb.append("\n");
+			sb.append(System.getProperty("line.separator"));
 
 		}
 		return sb.toString();
