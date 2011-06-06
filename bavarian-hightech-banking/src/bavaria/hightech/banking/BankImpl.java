@@ -37,6 +37,7 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 	private TimeEmitter timeem;
 	private Calendar calendar;
 	private Calendar revcalendar;
+	private Calendar revcalendar2;
 	private Locale currentLocale;
 	private ResourceBundle bank;
 
@@ -55,25 +56,52 @@ public class BankImpl implements BankCustomerView, BankAdmin, B2B {
 		defaultConditions();
 	}
 
+	//public void elapseTime(int time) {
+	//	calendar = timeem.getCalender();
+	//	revcalendar = timeem.getCalender();
+	//	Quarz quarz = null;
+//
+	//	for (int i = 0; i <= time; i++) {
+	//		revcalendar.add(Calendar.DATE, 1);
+	//		quarz = timeem.new Quarz();
+	//		quarz.startTimeing();
+	//		while (calendar.before(revcalendar)) {
+	//			calendar = timeem.getCalender();
+	//		}
+	//		try {
+	//			chargeInterest();
+	//		} catch (MoneyException e) {
+	//			e.printStackTrace();
+	//		}
+	//	}
+	//	quarz.getClock().showMe();
+	//}
+	
 	public void elapseTime(int time) {
 		calendar = timeem.getCalender();
 		revcalendar = timeem.getCalender();
-		Quarz quarz = null;
-
-		for (int i = 0; i <= time; i++) {
-			revcalendar.add(Calendar.DATE, 1);
-			quarz = timeem.new Quarz();
-			quarz.startTimeing();
-			while (calendar.before(revcalendar)) {
+		revcalendar2 = timeem.getCalender();
+		revcalendar2.add(Calendar.DATE, time);
+		Quarz quarz = timeem.new Quarz();
+		
+		quarz.startTimeing();
+		
+		while(calendar.before(revcalendar2)) {
+			for(int i = 0; i <= time; i++) {
+				revcalendar.add(Calendar.DATE, 1);
+				while (calendar.before(revcalendar)) {
+					calendar = timeem.getCalender();
+				}
+				try {
+					chargeInterest();
+				} catch (MoneyException e) {
+					e.printStackTrace();
+				}
 				calendar = timeem.getCalender();
 			}
-			try {
-				chargeInterest();
-			} catch (MoneyException e) {
-				e.printStackTrace();
-			}
 		}
-		quarz.getClock().showMe();
+		
+		quarz.stopTimeing();
 	}
 
 	/**

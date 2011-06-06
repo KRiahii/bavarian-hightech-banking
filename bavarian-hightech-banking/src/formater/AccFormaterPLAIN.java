@@ -14,16 +14,16 @@ public class AccFormaterPLAIN implements AccFormater {
 				currentLocale);
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("<html>");
 		sb.append(bank.getString("creationDate") + ": "
-				+ acc.getCreation(currentLocale) + "\n");
-		sb.append(bank.getString("name") + ": " + acc.getName() + "\n");
+				+ acc.getCreation(currentLocale) + System.getProperty("line.separator"));
+		
+		sb.append(bank.getString("name") + ": " + acc.getName() + System.getProperty("line.separator"));
 		sb.append(bank.getString("accountnumber") + ": " + acc.getAccNumber()
-				+ "\n");
+				+ System.getProperty("line.separator"));
 		sb.append(bank.getString("creditAccount") + ": "
-				+ acc.getCredit(currentLocale) + "\n");
-		sb.append(bank.getString("currency") + ": " + acc.getCurrency() + "\n");
-		sb.append("-------------------------" + "\n");
+				+ acc.getCredit(currentLocale) + System.getProperty("line.separator"));
+		sb.append(bank.getString("currency") + ": " + acc.getCurrency() + System.getProperty("line.separator"));
+		sb.append("-------------------------" + System.getProperty("line.separator"));
 		sb.append(acc.getEntry(currentLocale));
 		return sb.toString();
 	}

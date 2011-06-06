@@ -16,14 +16,14 @@ public class AccFormaterHTML implements AccFormater {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html>");
 		sb.append(bank.getString("creationDate") + ": "
-				+ acc.getCreation(currentLocale) + "\n");
-		sb.append(bank.getString("name") + ": " + acc.getName() + "\n");
+				+ acc.getCreation(currentLocale) + "<br>");
+		sb.append(bank.getString("name") + ": " + acc.getName() + "<br>");
 		sb.append(bank.getString("accountnumber") + ": " + acc.getAccNumber()
-				+ "\n");
+				+ "<br>");
 		sb.append(bank.getString("creditAccount") + ": "
-				+ acc.getCredit(currentLocale) + "\n");
-		sb.append(bank.getString("currency") + ": " + acc.getCurrency() + "\n");
-		sb.append("-------------------------" + "\n");
+				+ acc.getCredit(currentLocale) + "<br>");
+		sb.append(bank.getString("currency") + ": " + acc.getCurrency() + "<br>");
+		sb.append("-------------------------" + "<br>");
 		sb.append(acc.getEntry(currentLocale));
 		sb.append("</html>");
 
