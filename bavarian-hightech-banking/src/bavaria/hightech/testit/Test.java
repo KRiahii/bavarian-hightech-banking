@@ -93,7 +93,7 @@ public class Test {
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 		FileOutputStream fos = new FileOutputStream("test.txt");
-		bank.getStatement(2004, 1, fos, "text/plain");
+		bank.getStatement(2004, 1, System.out, "text/plain");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 
