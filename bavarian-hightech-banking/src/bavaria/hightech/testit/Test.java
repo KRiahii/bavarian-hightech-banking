@@ -6,6 +6,9 @@ import java.lang.reflect.Proxy;
 import java.util.Locale;
 
 import B2B.BankRegistry;
+import GUI.ButtonCreditListener;
+import GUI.ButtonTransferListener;
+import GUI.GUI;
 import bavaria.hightech.banking.*;
 import bavaria.hightech.banking.Interface.BankAdmin;
 import bavaria.hightech.banking.Interface.BankCustomerView;
@@ -120,5 +123,9 @@ public class Test {
 
 		bank1.showMoney(2000);
 		bank2.showMoney(2000);
+		
+		GUI gui = new GUI("test");
+		new ButtonTransferListener(bV, gui);
+		new ButtonCreditListener(bA, gui);
 	}
 }
