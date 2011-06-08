@@ -89,37 +89,4 @@ public class GUI {
 	JButton get_transfer() {
 		return transfer;
 	}
-
-	public static void main(String[] args) throws SecurityException,
-			IOException {
-
-		BankImpl bank = new BankImpl(new Locale("de", "de"));
-
-		DebugHandler handler = new DebugHandler(bank);
-
-		BankCustomerView bV = (BankCustomerView) Proxy.newProxyInstance(
-				BankCustomerView.class.getClassLoader(),
-				new Class[] { BankCustomerView.class }, handler);
-
-		BankAdmin bA = (BankAdmin) Proxy.newProxyInstance(
-				BankAdmin.class.getClassLoader(),
-				new Class[] { BankAdmin.class }, handler);
-
-		bV.createAcc("DepositAccount", "A", 1);
-		bV.createAcc("DepositAccount", "B", 0);
-		bV.createAcc("GiroAccount", "C", 0);
-		bV.createAcc("GiroAccount", "D", 1);
-		bV.createAcc("GiroAccount", "E", 2);
-
-		bV.addMoney(12432, 2000, Money.Currency.BRITISCHESPFUND);
-		bV.addMoney(3200, 2001, Money.Currency.EURO);
-		bV.addMoney(46345, 2002, Money.Currency.JAPANISCHERYEN);
-		bV.addMoney(313254, 2003, Money.Currency.USDOLLAR);
-		bV.addMoney(4040, 2004, Money.Currency.BRITISCHESPFUND);
-
-		GUI gui = new GUI("test");
-		new ButtonTransferListener(bV, gui);
-		new ButtonCreditListener(bA, gui);
-	}
-
 }
