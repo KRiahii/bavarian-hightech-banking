@@ -1,15 +1,6 @@
 package GUI;
 
-import java.io.IOException;
-import java.lang.reflect.Proxy;
-import java.util.*;
 import javax.swing.*;
-
-import Proxy.DebugHandler;
-import bavaria.hightech.banking.BankImpl;
-import bavaria.hightech.banking.Money;
-import bavaria.hightech.banking.Interface.BankAdmin;
-import bavaria.hightech.banking.Interface.BankCustomerView;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -23,7 +14,7 @@ public class GUI {
 	private JTextField textPanel_kNumberFrom;
 	private JTextField textPanel_kNumberTo;
 	private JTextField textPanel_amount;
-	private JScrollPane scrollPane;
+	private JScrollPane scroll_pane;
 
 	private JButton credit;
 	private JButton transfer;
@@ -39,7 +30,7 @@ public class GUI {
 		textPanel_kNumberFrom = new JTextField();
 		textPanel_kNumberTo = new JTextField();
 		textPanel_amount = new JTextField();
-		scrollPane = new JScrollPane(textPanel_kontostand);
+		scroll_pane = new JScrollPane(this.textPanel_kontostand);
 
 		credit = new JButton("Kontostand");
 		transfer = new JButton("Überweisen");
@@ -60,7 +51,7 @@ public class GUI {
 
 		frame.add(BorderLayout.WEST, toolPanel);
 		frame.add(BorderLayout.NORTH, kontoPanel);
-		frame.add(BorderLayout.CENTER, scrollPane);
+		frame.add(BorderLayout.CENTER, scroll_pane);
 		frame.add(BorderLayout.SOUTH, textPanel_amount);
 
 		frame.setSize(500, 500);
