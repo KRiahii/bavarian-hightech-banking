@@ -29,8 +29,8 @@ public class Test {
 	public static void main(String[] args) throws MoneyException, TypException,
 			SecurityException, IOException, AccException {
 
-		//Locale currentLocale = new Locale("en", "us");
-		Locale currentLocale = new Locale("de","de");
+		Locale currentLocale = new Locale("en", "us");
+		//Locale currentLocale = new Locale("de","de");
 
 		BankImpl bank = new BankImpl(currentLocale);
 
@@ -124,8 +124,8 @@ public class Test {
 		bank1.showMoney(2000);
 		bank2.showMoney(2000);
 		
-		GUI gui = new GUI("test");
+		GUI gui = new GUI("bavaria.hightech.banking");
 		new ButtonTransferListener(bV, gui);
-		new ButtonCreditListener(bA, gui);
+		new ButtonCreditListener(bV, gui, "text/plain");
 	}
 }
