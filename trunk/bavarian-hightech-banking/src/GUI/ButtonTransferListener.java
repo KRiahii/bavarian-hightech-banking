@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import bavaria.hightech.banking.Money;
 import bavaria.hightech.banking.Interface.BankCustomerView;
 
-class ButtonTransferListener implements ActionListener {
+public class ButtonTransferListener implements ActionListener {
 
 	private int kNumberFrom;
 	private int kNumberTo;
