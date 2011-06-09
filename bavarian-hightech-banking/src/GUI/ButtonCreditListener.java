@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 
 import bavaria.hightech.banking.Interface.BankAdmin;
 
-class ButtonCreditListener implements ActionListener {
+public class ButtonCreditListener implements ActionListener {
 
 	private int kNumberFrom;
 	private BankAdmin bA;
@@ -27,6 +27,6 @@ class ButtonCreditListener implements ActionListener {
 					.getText());
 		} catch (NumberFormatException e) {
 		}
-		kontostand.setText(bA.accountsCurrent(kNumberFrom, 1));
+		kontostand.setText(bA.accountsCurrent(kNumberFrom, 2));
 	}
 }

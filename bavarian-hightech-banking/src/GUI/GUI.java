@@ -23,6 +23,7 @@ public class GUI {
 	private JTextField textPanel_kNumberFrom;
 	private JTextField textPanel_kNumberTo;
 	private JTextField textPanel_amount;
+	private JScrollPane scrollPane;
 
 	private JButton credit;
 	private JButton transfer;
@@ -38,6 +39,7 @@ public class GUI {
 		textPanel_kNumberFrom = new JTextField();
 		textPanel_kNumberTo = new JTextField();
 		textPanel_amount = new JTextField();
+		scrollPane = new JScrollPane(textPanel_kontostand);
 
 		credit = new JButton("Kontostand");
 		transfer = new JButton("Überweisen");
@@ -58,7 +60,7 @@ public class GUI {
 
 		frame.add(BorderLayout.WEST, toolPanel);
 		frame.add(BorderLayout.NORTH, kontoPanel);
-		frame.add(BorderLayout.CENTER, textPanel_kontostand);
+		frame.add(BorderLayout.CENTER, scrollPane);
 		frame.add(BorderLayout.SOUTH, textPanel_amount);
 
 		frame.setSize(500, 500);
