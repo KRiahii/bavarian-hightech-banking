@@ -1,5 +1,8 @@
 package bavaria.hightech.banking.Interface;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import bavaria.hightech.banking.DepositConditions;
 import bavaria.hightech.banking.GiroConditions;
 
@@ -16,4 +19,5 @@ public interface BankAdmin {
 	void changeGiroInterest(float sollzins, float habezins);
 
 	void changeDepositInterest(float zins);
+
 }
