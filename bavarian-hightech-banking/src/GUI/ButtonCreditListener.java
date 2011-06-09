@@ -25,13 +25,12 @@ public class ButtonCreditListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		
+
 		try {
 			kNumberFrom = Integer.parseInt(gui.get_textPanel_kNumberFrom()
 					.getText());
 		} catch (NumberFormatException e) {
 		}
-		//kontostand.setText(bA.accountsCurrent(kNumberFrom, 1));
 
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		try {
