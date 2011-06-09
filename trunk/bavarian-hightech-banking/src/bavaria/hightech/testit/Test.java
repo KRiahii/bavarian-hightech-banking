@@ -29,8 +29,8 @@ public class Test {
 	public static void main(String[] args) throws MoneyException, TypException,
 			SecurityException, IOException, AccException {
 
-		Locale currentLocale = new Locale("en", "us");
-		//Locale currentLocale = new Locale("de","de");
+		// Locale currentLocale = new Locale("en", "us");
+		Locale currentLocale = new Locale("de", "de");
 
 		BankImpl bank = new BankImpl(currentLocale);
 
@@ -40,9 +40,8 @@ public class Test {
 				BankCustomerView.class.getClassLoader(),
 				new Class[] { BankCustomerView.class }, handler);
 
-		BankAdmin bA = (BankAdmin) Proxy.newProxyInstance(
-				BankAdmin.class.getClassLoader(),
-				new Class[] { BankAdmin.class }, handler);
+		BankAdmin bA = (BankAdmin) Proxy.newProxyInstance(BankAdmin.class
+				.getClassLoader(), new Class[] { BankAdmin.class }, handler);
 
 		bV.createAcc("DepositAccount", "A", 1);
 		bV.createAcc("DepositAccount", "B", 0);
@@ -95,6 +94,7 @@ public class Test {
 
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
+		@SuppressWarnings("unused")
 		FileOutputStream fos = new FileOutputStream("test.txt");
 		bank.getStatement(2004, 1, System.out, "text/plain");
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -123,8 +123,8 @@ public class Test {
 
 		bank1.showMoney(2000);
 		bank2.showMoney(2000);
-		
-		GUI gui = new GUI("bavaria.hightech.banking");
+
+		GUI gui = new GUI("bavaria.hightech.banking", currentLocale);
 		new ButtonTransferListener(bV, gui);
 		new ButtonCreditListener(bV, gui, "text/plain");
 	}

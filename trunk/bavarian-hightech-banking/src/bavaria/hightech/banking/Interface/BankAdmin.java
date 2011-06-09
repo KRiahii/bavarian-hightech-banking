@@ -1,8 +1,5 @@
 package bavaria.hightech.banking.Interface;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import bavaria.hightech.banking.DepositConditions;
 import bavaria.hightech.banking.GiroConditions;
 
